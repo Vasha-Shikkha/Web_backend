@@ -5,6 +5,7 @@ const registration = require('../functions/Authentication/registration')
 const signIn = require('../functions/Authentication/signIn')
 const signOut = require('../functions/Authentication/signOut')
 const findMcq = require('../functions/tasks/mcq/mcq')
+const findSentenceToJumble = require('../functions/tasks/fix_jumbled_sentence/fix_jumbled_sentence')
 
 //Authentication
 router.post('/user/register',registration)
@@ -13,5 +14,6 @@ router.delete('/user/logout',signOut)
 
 //Tasks
 router.get('/user/task/mcq',findMcq)
+router.get('/user/task/fix_jumbled_sentence',findSentenceToJumble)
 
 module.exports = router
