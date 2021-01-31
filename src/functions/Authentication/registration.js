@@ -19,7 +19,7 @@ const register = async (req, res) => {
 
         if (!user)
             res.status(status.INTERNAL_SERVER_ERROR)
-                .json({msg: "server error while creating new user"});
+                .json({error: "server error while creating new user"});
         else {
             delete user.dataValues.password;
             res.status(status.SUCCESS).json({user});
