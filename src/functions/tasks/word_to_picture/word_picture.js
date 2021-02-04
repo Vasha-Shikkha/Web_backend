@@ -1,23 +1,22 @@
 const UserModel = require('../../../models/User')
-const FIllInTheBlanksModel = require('../../../models/fill_in_the_blanks')
+const WordToPictureModel = require('../../../models/word_picture')
 const status = require('../../../utils/status_code/status_codes')
 const { verifyToken } = require('../../../utils/token/token')
 const { Op } = require('sequelize')
 
-const findParagraph = async (req, res) => {
+const findWordToPicture = async (req, res) => {
     let offset = parseInt(req.query.offset)
     let limit = parseInt(req.query.limit)
-    let context = (req.body.context === 'true')
-    const token = req.header('Authorization').replace('Bearer ','')
+    const token = req.header('Authorization').replace('Bearer ', '')
     const data = verifyToken(token)
-    let paragraphsToReturn = []
+    let wordPictureToReturn = []
     let user = await UserModel.findOne({
         where: {
             id: data.userID
         }
     })
 
-    if (!user){
+    if (!user) {
         return res.status(status.DATA_NOT_FOUND)
             .json({
                 error: "Could not process request at this moment"
@@ -26,30 +25,29 @@ const findParagraph = async (req, res) => {
 
     const user_level = user.dataValues.level
 
-    const paragraphs = await FIllInTheBlanksModel.findAll({
+    const word_to_picture = await WordToPictureModel.findAll({
         offset,
         limit,
         where: {
             level_requirement: {
-                [Op.lte] : user_level
+                [Op.lte]: user_level
             },
-            context
         },
     })
 
-    for (let paragraph of paragraphs){
-        paragraphsToReturn.push({
-            paragraph: paragraph.dataValues.paragraph,
-            options: paragraph.dataValues.options,
-            answers: paragraph.dataValues.answers,
-            explanation_english: paragraph.dataValues.explanation_english,
-            explanation_bangla: paragraph.dataValues.explanation_bangla
+    for(let exercise of word_to_picture){
+        wordPictureToReturn.push({
+            question: exercise.dataValues.question,
+            images: exercise.dataValues.images,
+            answer: exercise.dataValues.answer,
+            explanation_english: exercise.dataValues.explanation_english,
+            explanation_bangla: exercise.dataValues.explanation_bangla
         })
     }
 
     try {
         return res.status(status.SUCCESS)
-            .send(paragraphsToReturn)
+            .send(wordPictureToReturn)
     }catch (error) {
         return res.status(status.INTERNAL_SERVER_ERROR)
             .json({
@@ -58,4 +56,4 @@ const findParagraph = async (req, res) => {
     }
 }
 
-module.exports = findParagraph
+module.exports = findWordToPicture

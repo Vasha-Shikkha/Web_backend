@@ -1,9 +1,8 @@
 const { DataTypes } = require('sequelize')
 const database = require('../utils/database/database')
-const Sequelize = require('sequelize')
 
-const fill_in_the_gaps = database.define(
-    'Fill in the gaps',
+const word_picture = database.define(
+    'Word Picture',
     {
         id: {
             type: DataTypes.INTEGER,
@@ -12,25 +11,19 @@ const fill_in_the_gaps = database.define(
             primaryKey: true,
         },
 
-        paragraph: {
+        question: {
             type: DataTypes.TEXT,
             allowNull: false,
         },
 
-        options: {
-            type: DataTypes.ARRAY(DataTypes.STRING),
+        images: {
+            type: DataTypes.ARRAY(DataTypes.TEXT),
             allowNull: false,
         },
 
-        answers: {
-            type: DataTypes.ARRAY(DataTypes.STRING),
+        answer: {
+            type: DataTypes.INTEGER,
             allowNull: false,
-        },
-
-        context: {
-            type: DataTypes.BOOLEAN,
-            defaultValue: false,
-            allowNull: false
         },
 
         level_requirement: {
@@ -54,11 +47,10 @@ const fill_in_the_gaps = database.define(
             defaultValue: false,
         },
     },
-
     {
         freezeTableName: true,
-        timestamps: false,
+        timestamps: false
     }
 )
 
-module.exports = fill_in_the_gaps
+module.exports = word_picture
