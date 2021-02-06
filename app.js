@@ -18,7 +18,7 @@ app.use(userRouters)
 app.use(uploadRouter)
 
 app.get('/', async (req, res) => {
-    res.status(200).send('Hello, world!').end()
+    res.status(200).send('Hello, world! VashaShikkha backend here :)').end()
 })
 
 app.listen(port, () => {
