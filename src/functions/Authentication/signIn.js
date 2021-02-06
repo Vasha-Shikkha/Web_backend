@@ -20,7 +20,7 @@ const signIn = async (req, res) => {
             })
     }
 
-    if (!compare(req.body.password, user.dataValues.password)) {
+    if (!await compare(req.body.password, user.dataValues.password)) {
         return res.status(status.BAD_REQUEST)
             .json({
                 error: "Wrong password"
