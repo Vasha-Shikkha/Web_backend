@@ -5,7 +5,7 @@ phases:
       - npm install
   pre_build:
     commands:
-      - echo In pre build phase"]
+      - echo In pre build phase
   build:
     commands:
       - echo Build starting started on `date`
