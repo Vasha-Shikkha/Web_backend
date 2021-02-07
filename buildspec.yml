@@ -1,0 +1,21 @@
+version: 0.2
+phases:
+  install:
+    commands:
+      - npm install
+  pre-build:
+    commands:
+      - echo In pre build phase"]
+  build:
+    commands:
+      - echo Build starting started on `date`
+      - npm build
+  post-build:
+    commands:
+      - echo Build finished on `date`
+artifacts:
+    files:
+      - app.js
+      - '**/*'
+
+
