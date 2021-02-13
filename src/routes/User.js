@@ -9,6 +9,7 @@ const findSentenceToJumble = require('../functions/tasks/fix_jumbled_sentence/fi
 const findSentenceToMatch = require('../functions/tasks/sentence_matching/sentence_matching')
 const findParagraphs = require('../functions/tasks/fill_in_the_blanks/fill_in_the_blanks')
 const findWordPicture = require('../functions/tasks/word_to_picture/word_picture')
+const lookUpWord = require('../functions/dictionary/dictionary')
 
 //Authentication
 router.post('/user/register',registration)
@@ -21,5 +22,8 @@ router.get('/user/task/fix_jumbled_sentence',findSentenceToJumble)
 router.get('/user/task/sentence_matching',findSentenceToMatch)
 router.get('/user/task/fill_in_the_blanks',findParagraphs)
 router.get('/user/task/word_to_picture',findWordPicture)
+
+//dictionary
+router.get('/dictionary',lookUpWord)
 
 module.exports = router
