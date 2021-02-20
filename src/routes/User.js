@@ -10,6 +10,7 @@ const findSentenceToMatch = require('../functions/tasks/sentence_matching/senten
 const findParagraphs = require('../functions/tasks/fill_in_the_blanks/fill_in_the_blanks')
 const findWordPicture = require('../functions/tasks/word_to_picture/word_picture')
 const lookUpWord = require('../functions/dictionary/dictionary')
+const recentWordSearches = require('../functions/dictionary/flashcard')
 
 //Authentication
 router.post('/user/register',registration)
@@ -25,5 +26,8 @@ router.get('/user/task/word_to_picture',findWordPicture)
 
 //dictionary
 router.get('/dictionary',lookUpWord)
+
+//flashCard
+router.get('/flashcard/find',recentWordSearches)
 
 module.exports = router
