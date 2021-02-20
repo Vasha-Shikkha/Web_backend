@@ -45,8 +45,6 @@ const recentSearches = async (req, res) => {
         recentWords.push(dictionaryResult.dataValues)
     }
 
-    console.log(recentWords)
-
     try {
         return res.status(status.SUCCESS)
             .send(recentWords)
