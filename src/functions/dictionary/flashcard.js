@@ -22,8 +22,6 @@ const recentSearches = async (req, res) => {
     }
 
     let dateToTime = new Date(req.body.date)
-    console.log(dateToTime)
-    console.log(typeof dateToTime)
 
     const flashCards = await flashCardModel.findAll({
         where: {
