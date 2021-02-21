@@ -1,5 +1,5 @@
-const UserModel = require('../../models/User')
-const status = require('../../utils/status_code/status_codes')
+const UserModel = require('../../../models/User')
+const status = require('../../../utils/status_code/status_codes')
 
 const register = async (req, res) => {
     let userInfo = req.body

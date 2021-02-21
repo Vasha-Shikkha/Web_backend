@@ -1,8 +1,8 @@
-const UserModel = require('../../models/User')
-const status = require('../../utils/status_code/status_codes')
-const { compare } = require('../../utils/encryption/hash_passowrd')
-const UserTokenModel = require('../../models/UserToken')
-const { generateToken} = require('../../utils/token/token')
+const UserModel = require('../../../models/User')
+const status = require('../../../utils/status_code/status_codes')
+const { compare } = require('../../../utils/encryption/hash_passowrd')
+const UserTokenModel = require('../../../models/UserToken')
+const { generateToken} = require('../../../utils/token/token')
 const moment = require('moment')
 
 const signIn = async (req, res) => {

@@ -1,6 +1,6 @@
-const status = require('../../utils/status_code/status_codes')
-const UserTokenModel = require('../../models/UserToken')
-const { verifyToken } = require('../../utils/token/token')
+const status = require('../../../utils/status_code/status_codes')
+const UserTokenModel = require('../../../models/UserToken')
+const { verifyToken } = require('../../../utils/token/token')
 
 const signOut = async (req, res) => {
     const token = req.header('Authorization').replace('Bearer ','')
