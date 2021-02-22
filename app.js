@@ -4,6 +4,7 @@ const cors = require('cors')
 const chalk = require('chalk')
 const database = require('./src/utils/database/database')
 const userRouters = require('./src/routes/User')
+const adminRouters = require('./src/routes/Admin')
 const uploadRouter = require('./src/utils/storage/storage')
 
 //Requiring models for now, to be deleted later
@@ -16,6 +17,7 @@ app.use(cors())
 app.use(express.json())
 app.use(userRouters)
 app.use(uploadRouter)
+app.use(adminRouters)
 
 app.get('/', async (req, res) => {
     res.status(200).send('Hello, world! VashaShikkha backend here :)').end()
