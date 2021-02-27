@@ -2,3 +2,5 @@ test
 node_modules
 .idea
 .env
+src/scripts
+words.txt

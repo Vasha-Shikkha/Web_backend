@@ -12,12 +12,12 @@ const dictionary = database.define(
         },
 
         meaning: {
-            type: DataTypes.STRING,
+            type: DataTypes.ARRAY(DataTypes.STRING),
             allowNull: false
         },
 
         example: {
-            type: DataTypes.TEXT,
+            type: DataTypes.ARRAY(DataTypes.TEXT),
             allowNull: true
         }
     },
