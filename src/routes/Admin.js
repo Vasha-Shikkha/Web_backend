@@ -5,7 +5,8 @@ const signOut = require('../functions/Authentication/Admin/signOut')
 const createAdmin = require('../functions/Authentication/Admin/createAdmin')
 const updateRole = require('../functions/Authentication/Admin/changeRole')
 const initialSuperAdmin = require('../functions/Authentication/Admin/initialCreate')
-const insertIntoDictionary = require('../functions/content_insertion/dictionary')
+const insertIntoDictionary = require('../functions/content/dictionary/insert')
+const dumpDictionary = require('../functions/content/dictionary/deleteAll')
 
 //Authentication
 router.post('/admin/login',signIn)
@@ -16,5 +17,6 @@ router.post('/admin/initial',initialSuperAdmin) //Somehow need to make it one ti
 
 //Dictionary and content
 router.post('/dictionary/insert',insertIntoDictionary)
+router.delete('/dictionary/deleteAll',dumpDictionary)
 
 module.exports = router

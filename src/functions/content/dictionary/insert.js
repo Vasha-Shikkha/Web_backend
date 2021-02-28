@@ -1,5 +1,5 @@
-const dictionaryModel = require('../../models/dictionary')
-const status_codes = require('../../utils/status_code/status_codes')
+const dictionaryModel = require('../../../models/dictionary')
+const status_codes = require('../../../utils/status_code/status_codes')
 
 const insertIntoDictionary = async (req, res) => {
     const word = await dictionaryModel.create(req.body)

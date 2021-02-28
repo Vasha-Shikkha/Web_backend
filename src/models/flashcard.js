@@ -21,7 +21,9 @@ const flashCard = database.define(
             references: {
                 model: 'Dictionary',
                 key: 'word',
-                deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE
+                deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE,
+                onDelete : 'CASCADE',
+                hooks : true
             },
             allowNull: false,
             primaryKey: true
