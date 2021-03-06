@@ -10,6 +10,19 @@ const dumpDictionary = require('../functions/content/dictionary/deleteAll')
 const FBinsert = require('../functions/content/fill_in_the_blanks/insert')
 const FBupdate = require('../functions/content/fill_in_the_blanks/edit')
 const FBdelete = require('../functions/content/fill_in_the_blanks/delete')
+const mcqInsert = require('../functions/content/mcq/insert')
+const mcqUpdate = require('../functions/content/mcq/edit')
+const mcqDelete = require('../functions/content/mcq/delete')
+const JSinsert = require('../functions/content/fix_jumbled_sentence/insert')
+const JSupdate = require('../functions/content/fix_jumbled_sentence/edit')
+const JSdelete = require('../functions/content/fix_jumbled_sentence/delete')
+const SMinsert = require('../functions/content/sentence_matching/insert')
+const SMupdate = require('../functions/content/sentence_matching/edit')
+const SMdelete = require('../functions/content/sentence_matching/delete')
+const WPinsert = require('../functions/content/word_to_picture/insert')
+const WPupdate = require('../functions/content/word_to_picture/edit')
+const WPdelete = require('../functions/content/word_to_picture/delete')
+
 
 //Authentication
 router.post('/admin/login',signIn)
@@ -28,5 +41,25 @@ router.delete('/dictionary/deleteAll',dumpDictionary)
 router.post('/content/fill_in_the_blanks/insert',FBinsert)
 router.patch('/content/fill_in_the_blanks/update',FBupdate)
 router.delete('/content/fill_in_the_blanks/delete',FBdelete)
+
+//---Sentence matching
+router.post('/content/sentence_matching/insert',SMinsert)
+router.patch('/content/sentence_matching/update',SMupdate)
+router.delete('/content/sentence_matching/delete',SMdelete)
+
+//---Jumbled sentence
+router.post('/content/jumbled_sentence/insert',JSinsert)
+router.patch('/content/jumbled_sentence/update',JSupdate)
+router.delete('/content/jumbled_sentence/delete',JSdelete)
+
+//---mcq
+router.post('/content/mcq/insert',mcqInsert)
+router.patch('/content/mcq/update',mcqUpdate)
+router.delete('/content/mcq/delete',mcqDelete)
+
+//---Word to picture
+router.post('/content/word_to_picture/insert',WPinsert)
+router.patch('/content/word_to_picture/update',WPupdate)
+router.delete('/content/word_to_picture/delete',WPdelete)
 
 module.exports = router
