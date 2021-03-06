@@ -38,8 +38,7 @@ const findSentenceToJumble = async (req, res) => {
     for (sentence of sentences){
         sentencesToReturn.push({
             original_sentence: sentence.dataValues.original_sentence,
-            explanation_english: sentence.dataValues.explanation_english,
-            explanation_bangla: sentence.dataValues.explanation_bangla
+            explanation: sentence.dataValues.explanation,
         })
     }
 

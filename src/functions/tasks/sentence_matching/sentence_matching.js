@@ -39,8 +39,7 @@ const findMatchingPairs = async (req, res) => {
         sentencesToReturn.push({
             part_one: sentence.dataValues.left_part,
             part_two: sentence.dataValues.right_part,
-            explanation_english: sentence.dataValues.explanation_english,
-            explanation_bangla: sentence.dataValues.explanation_bangla
+            explanation: sentence.dataValues.explanation,
         })
     }
 

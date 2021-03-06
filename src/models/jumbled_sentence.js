@@ -22,14 +22,9 @@ const Jumbled_sentence = database.define(
             defaultValue: 1
         },
 
-        explanation_english: {
+        explanation: {
             type: DataTypes.TEXT,
             allowNull: true,
-        },
-
-        explanation_bangla: {
-            type: DataTypes.TEXT,
-            allowNull: true
         },
 
         deleted: {

@@ -17,6 +17,11 @@ const Mcq = database.define(
             allowNull: false,
         },
 
+        options: {
+            type: DataTypes.ARRAY(DataTypes.STRING),
+            allowNull: false,
+        },
+
         answer: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -28,12 +33,7 @@ const Mcq = database.define(
             defaultValue: 1
         },
 
-        explanation_english: {
-            type: DataTypes.TEXT,
-            allowNull: true,
-        },
-
-        explanation_bangla: {
+        explanation: {
             type: DataTypes.TEXT,
             allowNull: true,
         },

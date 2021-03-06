@@ -11,8 +11,7 @@ const updateFB = async (req, res) => {
                 'options',
                 'answers',
                 'level_requirement',
-                'explanation_english',
-                'explanation_bangla',
+                'explanation',
                 'context'
             ],
             updateOnDuplicate: [

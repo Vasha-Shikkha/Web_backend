@@ -1,6 +1,5 @@
 const UserModel = require('../../../models/User')
 const McqModel = require('../../../models/mcq')
-const McqOptionModel = require('../../../models/mcq_options')
 const status = require('../../../utils/status_code/status_codes')
 const { verifyToken } = require('../../../utils/token/token')
 const { Op } = require('sequelize')
@@ -39,22 +38,12 @@ const findMcq = async (req, res) => {
 
     for (mcq of mcqs){
         let mcq_id = mcq.dataValues.id
-        const options = await McqOptionModel.findAll({
-            where: {
-                mcq_id
-            }
-        })
-
-        let Options = []
-        for (option of options)
-            Options.push(option.value)
 
         mcqsToReturn.push({
             Question: mcq.dataValues.question,
-            Options,
+            Options: mcq.dataValues.options,
             Answer: mcq.dataValues.answer,
-            explanation_english: mcq.dataValues.explanation_english,
-            explanation_bangla: mcq.dataValues.explanation_bangla,
+            explanation: mcq.dataValues.explanation,
         })
     }
 

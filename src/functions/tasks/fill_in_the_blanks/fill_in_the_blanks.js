@@ -42,8 +42,7 @@ const findParagraph = async (req, res) => {
             paragraph: paragraph.dataValues.paragraph,
             options: paragraph.dataValues.options,
             answers: paragraph.dataValues.answers,
-            explanation_english: paragraph.dataValues.explanation_english,
-            explanation_bangla: paragraph.dataValues.explanation_bangla
+            explanation: paragraph.dataValues.explanation,
         })
     }
 

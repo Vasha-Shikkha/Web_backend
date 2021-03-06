@@ -32,12 +32,7 @@ const word_picture = database.define(
             defaultValue: 1
         },
 
-        explanation_english: {
-            type: DataTypes.TEXT,
-            allowNull: true,
-        },
-
-        explanation_bangla: {
+        explanation: {
             type: DataTypes.TEXT,
             allowNull: true,
         },

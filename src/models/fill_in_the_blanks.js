@@ -39,12 +39,7 @@ const fill_in_the_gaps = database.define(
             defaultValue: 1
         },
 
-        explanation_english: {
-            type: DataTypes.TEXT,
-            allowNull: true,
-        },
-
-        explanation_bangla: {
+        explanation: {
             type: DataTypes.TEXT,
             allowNull: true,
         },

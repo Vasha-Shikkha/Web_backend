@@ -40,8 +40,7 @@ const findWordToPicture = async (req, res) => {
             question: exercise.dataValues.question,
             images: exercise.dataValues.images,
             answer: exercise.dataValues.answer,
-            explanation_english: exercise.dataValues.explanation_english,
-            explanation_bangla: exercise.dataValues.explanation_bangla
+            explanation: exercise.dataValues.explanation,
         })
     }
 
