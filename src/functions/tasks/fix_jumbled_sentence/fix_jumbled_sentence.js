@@ -39,6 +39,7 @@ const findSentenceToJumble = async (req, res) => {
         sentencesToReturn.push({
             original_sentence: sentence.dataValues.original_sentence,
             explanation: sentence.dataValues.explanation,
+            context: sentence.dataValues.context
         })
     }
 

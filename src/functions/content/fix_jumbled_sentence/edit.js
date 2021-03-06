@@ -9,12 +9,14 @@ const updateFB = async (req, res) => {
                 'id',
                 'original_sentence',
                 'level_requirement',
-                'explanation'
+                'explanation',
+                'context'
             ],
             updateOnDuplicate: [
                 'original_sentence',
                 'level_requirement',
-                'explanation'
+                'explanation',
+                'context'
             ]
         }
     ).then(r => {

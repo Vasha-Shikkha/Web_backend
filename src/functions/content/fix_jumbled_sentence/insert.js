@@ -8,7 +8,8 @@ const insertFB = async (req, res) => {
             fields:[
                 'original_sentence',
                 'level_requirement',
-                'explanation'
+                'explanation',
+                'context'
             ]
         }
     ).then(r => {

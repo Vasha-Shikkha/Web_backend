@@ -27,6 +27,12 @@ const Jumbled_sentence = database.define(
             allowNull: true,
         },
 
+        context: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false,
+            allowNull: false
+        },
+
         deleted: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
