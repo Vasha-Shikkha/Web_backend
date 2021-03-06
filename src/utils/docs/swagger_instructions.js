@@ -3,6 +3,7 @@
 2. follow official documentation of swagger to leaarn more about these.
 3. about the indentation inside swagger-comment, for some reason using 'tab' causes the app to crash,
    so use 'spaces' instead.
+4. you will find a json file in this directory. copy it in files->preference->snippets->javascripts.json
 */
 
 //snippet for model:
