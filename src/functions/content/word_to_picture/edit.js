@@ -1,26 +1,24 @@
-const fillInTheBlanksModel = require('../../../models/fill_in_the_blanks')
+const wordToPictureModel = require('../../../models/word_picture')
 const status_codes = require('../../../utils/status_code/status_codes')
 
 const updateFB = async (req, res) => {
-    fillInTheBlanksModel.bulkCreate(
+    wordToPictureModel.bulkCreate(
         req.body,
         {
             fields:[
                 'id',
-                'paragraph',
-                'options',
-                'answers',
+                'question',
+                'images',
+                'answer',
                 'level_requirement',
-                'explanation',
-                'context'
+                'explanation'
             ],
             updateOnDuplicate: [
-                'paragraph',
-                'options',
-                'answers',
+                'question',
+                'images',
+                'answer',
                 'level_requirement',
-                'explanation',
-                'context'
+                'explanation'
             ]
         }
     ).then(r => {

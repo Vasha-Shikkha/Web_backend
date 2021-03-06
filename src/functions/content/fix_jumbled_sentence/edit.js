@@ -1,26 +1,20 @@
-const fillInTheBlanksModel = require('../../../models/fill_in_the_blanks')
+const fixJumbledSentenceModel = require('../../../models/jumbled_sentence')
 const status_codes = require('../../../utils/status_code/status_codes')
 
 const updateFB = async (req, res) => {
-    fillInTheBlanksModel.bulkCreate(
+    fixJumbledSentenceModel.bulkCreate(
         req.body,
         {
             fields:[
                 'id',
-                'paragraph',
-                'options',
-                'answers',
+                'original_sentence',
                 'level_requirement',
-                'explanation',
-                'context'
+                'explanation'
             ],
             updateOnDuplicate: [
-                'paragraph',
-                'options',
-                'answers',
+                'original_sentence',
                 'level_requirement',
-                'explanation',
-                'context'
+                'explanation'
             ]
         }
     ).then(r => {

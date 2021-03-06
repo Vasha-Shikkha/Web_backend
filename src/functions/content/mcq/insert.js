@@ -1,33 +1,23 @@
-const fillInTheBlanksModel = require('../../../models/fill_in_the_blanks')
+const mcqModel = require('../../../models/mcq')
 const status_codes = require('../../../utils/status_code/status_codes')
 
-const updateFB = async (req, res) => {
-    fillInTheBlanksModel.bulkCreate(
+const insertFB = async (req, res) => {
+    mcqModel.bulkCreate(
         req.body,
         {
             fields:[
-                'id',
                 'paragraph',
                 'options',
                 'answers',
                 'level_requirement',
-                'explanation',
-                'context'
-            ],
-            updateOnDuplicate: [
-                'paragraph',
-                'options',
-                'answers',
-                'level_requirement',
-                'explanation',
-                'context'
+                'explanation'
             ]
         }
     ).then(r => {
             if(r !== undefined)
                 return res.status(status_codes.SUCCESS)
                     .send({
-                        message: "Content update successful"
+                        message: "Content insertion successful"
                     })
         }
     ).catch(err => {
@@ -38,4 +28,4 @@ const updateFB = async (req, res) => {
     })
 }
 
-module.exports = updateFB
+module.exports = insertFB
