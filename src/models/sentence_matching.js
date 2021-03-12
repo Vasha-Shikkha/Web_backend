@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize')
 const database = require('../utils/database/database')
+const Sequelize = require('sequelize')
 
 const sentence_matching = database.define(
     'Sentence Matching',

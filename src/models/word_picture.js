@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize')
 const database = require('../utils/database/database')
+const Sequelize = require('sequelize')
 
 const word_picture = database.define(
     'Word Picture',
@@ -9,6 +10,18 @@ const word_picture = database.define(
             autoIncrement: true,
             allowNull: false,
             primaryKey: true,
+        },
+
+        topic_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            references: {
+                model: 'Topic',
+                key: 'id',
+                deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE,
+                onDelete: 'CASCADE',
+                hooks: true
+            }
         },
 
         question: {
