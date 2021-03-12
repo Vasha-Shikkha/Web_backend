@@ -22,6 +22,9 @@ const SMdelete = require('../functions/content/sentence_matching/delete')
 const WPinsert = require('../functions/content/word_to_picture/insert')
 const WPupdate = require('../functions/content/word_to_picture/edit')
 const WPdelete = require('../functions/content/word_to_picture/delete')
+const topicInsert = require('../functions/topic/Admin/insert')
+const topicUpdate = require('../functions/topic/Admin/edit')
+const topicDelete = require('../functions/topic/Admin/delete')
 
 
 //Authentication
@@ -30,6 +33,12 @@ router.delete('/admin/logout',signOut)
 router.post('/admin/create_admin',createAdmin)
 router.patch('/admin/update_role',updateRole)
 router.post('/admin/initial',initialSuperAdmin) //Somehow need to make it one time use
+
+//topic table
+router.post('/admin/topic/insert',topicInsert)
+router.patch('/admin/topic/update',topicUpdate)
+router.delete('/admin/topic/delete',topicDelete)
+
 
 //Dictionary and content
 

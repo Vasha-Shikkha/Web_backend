@@ -7,6 +7,7 @@ const { Op } = require('sequelize')
 const findMatchingPairs = async (req, res) => {
     let offset = parseInt(req.query.offset)
     let limit = parseInt(req.query.limit)
+    let topic_id = parseInt(req.query.topic_id)
     const token = req.header('Authorization').replace('Bearer ','')
     const data = verifyToken(token)
     let sentencesToReturn = []
@@ -30,6 +31,7 @@ const findMatchingPairs = async (req, res) => {
         limit,
         where: {
             level_requirement: {
+                topic_id,
                 [Op.lte] : user_level
             },
         },

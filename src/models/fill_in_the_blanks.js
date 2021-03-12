@@ -12,6 +12,18 @@ const fill_in_the_gaps = database.define(
             primaryKey: true,
         },
 
+        topic_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            references: {
+                model: 'Topic',
+                key: 'id',
+                deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE,
+                onDelete: 'CASCADE',
+                hooks: true
+            }
+        },
+
         paragraph: {
             type: DataTypes.TEXT,
             allowNull: false,

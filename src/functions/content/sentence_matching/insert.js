@@ -7,6 +7,7 @@ const insertFB = async (req, res) => {
         {
             fields:[
                 'id',
+                'topic_id',
                 'left_part',
                 'right_part',
                 'level_requirement',

@@ -11,6 +11,18 @@ const Jumbled_sentence = database.define(
             primaryKey: true
         },
 
+        topic_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            references: {
+                model: 'Topic',
+                key: 'id',
+                deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE,
+                onDelete: 'CASCADE',
+                hooks: true
+            }
+        },
+
         original_sentence: {
             type: DataTypes.TEXT,
             allowNull: false,

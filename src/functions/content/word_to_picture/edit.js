@@ -7,6 +7,7 @@ const updateFB = async (req, res) => {
         {
             fields:[
                 'id',
+                'topic_id',
                 'question',
                 'images',
                 'answer',

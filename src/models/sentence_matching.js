@@ -11,6 +11,18 @@ const sentence_matching = database.define(
             primaryKey: true,
         },
 
+        topic_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            references: {
+                model: 'Topic',
+                key: 'id',
+                deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE,
+                onDelete: 'CASCADE',
+                hooks: true
+            }
+        },
+
         left_part: {
             type: DataTypes.TEXT,
             allowNull: false,

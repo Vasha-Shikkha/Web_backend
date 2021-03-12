@@ -11,11 +11,15 @@ const findParagraphs = require('../functions/tasks/fill_in_the_blanks/fill_in_th
 const findWordPicture = require('../functions/tasks/word_to_picture/word_picture')
 const lookUpWord = require('../functions/dictionary/dictionary')
 const recentWordSearches = require('../functions/dictionary/flashcard')
+const getTopics = require('../functions/topic/User/getTopics')
 
 //Authentication
 router.post('/user/register',registration)
 router.post('/user/login',signIn)
 router.delete('/user/logout',signOut)
+
+//Topics
+router.get('/user/topics',getTopics)
 
 //Tasks
 router.get('/user/task/mcq',findMcq)
