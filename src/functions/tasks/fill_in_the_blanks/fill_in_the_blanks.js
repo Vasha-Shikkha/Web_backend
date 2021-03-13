@@ -8,7 +8,7 @@ const findParagraph = async (req, res) => {
     let offset = parseInt(req.query.offset)
     let limit = parseInt(req.query.limit)
     let topic_id = parseInt(req.query.topic_id)
-    let context = (req.body.context === 'true')
+    let context = (req.query.context === 'true')
     const token = req.header('Authorization').replace('Bearer ','')
     const data = verifyToken(token)
     let paragraphsToReturn = []
