@@ -1,5 +1,7 @@
 const topicModel = require('../../../models/topic')
 const status_codes = require('../../../utils/status_code/status_codes')
+const UserModel = require('../../../models/User')
+const { verifyToken } = require('../../../utils/token/token')
 
 const getTopics = async (req, res) => {
     const token = req.header('Authorization').replace('Bearer ','')
