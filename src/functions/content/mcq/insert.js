@@ -7,9 +7,9 @@ const insertFB = async (req, res) => {
         {
             fields:[
                 'topic_id',
-                'paragraph',
+                'question',
                 'options',
-                'answers',
+                'answer',
                 'level_requirement',
                 'explanation'
             ]
@@ -22,6 +22,7 @@ const insertFB = async (req, res) => {
                     })
         }
     ).catch(err => {
+        console.log(err)
         return res.status(status_codes.INTERNAL_SERVER_ERROR)
             .send({
                 error: "Something went wrong"

@@ -8,7 +8,7 @@ const updateFB = async (req, res) => {
             fields:[
                 'id',
                 'topic_id',
-                'paragraph',
+                'question',
                 'options',
                 'answer',
                 'level_requirement',
@@ -16,7 +16,7 @@ const updateFB = async (req, res) => {
             ],
             updateOnDuplicate: [
                 'topic_id',
-                'paragraph',
+                'question',
                 'options',
                 'answer',
                 'level_requirement',
