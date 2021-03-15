@@ -1,64 +1,64 @@
-const { DataTypes } = require('sequelize')
-const database = require('../utils/database/database')
-const Sequelize = require('sequelize')
+const {DataTypes} = require("sequelize");
+const database = require("../utils/database/database");
+const Sequelize = require("sequelize");
 
 const Mcq = database.define(
-    'Mcq',
-    {
-        id: {
-            type: DataTypes.INTEGER,
-            autoIncrement: true,
-            allowNull: false,
-            primaryKey: true,
-        },
+	"Mcq",
+	{
+		id: {
+			type: DataTypes.INTEGER,
+			autoIncrement: true,
+			allowNull: false,
+			primaryKey: true,
+		},
 
-        topic_id: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            references: {
-                model: 'Topic',
-                key: 'id',
-                deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE,
-                onDelete: 'CASCADE',
-                hooks: true
-            }
-        },
+		topic_id: {
+			type: DataTypes.INTEGER,
+			allowNull: false,
+			references: {
+				model: "Topic",
+				key: "id",
+				deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE,
+				onDelete: "CASCADE",
+				hooks: true,
+			},
+		},
 
-        question: {
-            type: DataTypes.TEXT,
-            allowNull: false,
-        },
+		question: {
+			type: DataTypes.TEXT,
+			allowNull: false,
+		},
 
-        options: {
-            type: DataTypes.ARRAY(DataTypes.STRING),
-            allowNull: false,
-        },
+		options: {
+			type: DataTypes.ARRAY(DataTypes.STRING),
+			allowNull: false,
+		},
 
-        answer: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
+		answer: {
+			type: DataTypes.STRING,
+			allowNull: false,
+		},
 
-        level_requirement: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            defaultValue: 1
-        },
+		level_requirement: {
+			type: DataTypes.INTEGER,
+			allowNull: false,
+			defaultValue: 1,
+		},
 
-        explanation: {
-            type: DataTypes.TEXT,
-            allowNull: true,
-        },
+		explanation: {
+			type: DataTypes.TEXT,
+			allowNull: true,
+		},
 
-        deleted: {
-            type: DataTypes.BOOLEAN,
-            defaultValue: false,
-        }
-    },
-    {
-        freezeTableName: true,
-        timestamps: false,
-    }
-)
+		deleted: {
+			type: DataTypes.BOOLEAN,
+			defaultValue: false,
+		},
+	},
+	{
+		freezeTableName: true,
+		timestamps: false,
+	}
+);
 
-module.exports = Mcq
+module.exports = Mcq;

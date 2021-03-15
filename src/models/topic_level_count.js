@@ -2,13 +2,36 @@ const {DataTypes} = require("sequelize");
 const database = require("../utils/database/database");
 const Sequelize = require("sequelize");
 
-const word_picture = database.define(
-	"Word Picture",
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Topic_Level_Count:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: string
+ *           descriptions: primary key
+ *         topic_id:
+ *           type: string
+ *           descriptions: id of the topic
+ *         level:
+ *           type: number
+ *         count:
+ *           type: number
+ *       required:
+ *         - id
+ *         - topic_id
+ *         - level
+ *         - count
+ */
+const topic_level_count = database.define(
+	"Topic_Level_Count",
 	{
 		id: {
 			type: DataTypes.INTEGER,
-			autoIncrement: true,
 			allowNull: false,
+			autoIncrement: true,
 			primaryKey: true,
 		},
 
@@ -24,35 +47,14 @@ const word_picture = database.define(
 			},
 		},
 
-		question: {
-			type: DataTypes.TEXT,
-			allowNull: false,
-		},
-
-		images: {
-			type: DataTypes.ARRAY(DataTypes.TEXT),
-			allowNull: false,
-		},
-
-		answer: {
+		level: {
 			type: DataTypes.INTEGER,
 			allowNull: false,
 		},
 
-		level_requirement: {
+		count: {
 			type: DataTypes.INTEGER,
 			allowNull: false,
-			defaultValue: 1,
-		},
-
-		explanation: {
-			type: DataTypes.TEXT,
-			allowNull: true,
-		},
-
-		deleted: {
-			type: DataTypes.BOOLEAN,
-			defaultValue: false,
 		},
 	},
 	{
@@ -61,4 +63,4 @@ const word_picture = database.define(
 	}
 );
 
-module.exports = word_picture;
+module.exports = topic_level_count;

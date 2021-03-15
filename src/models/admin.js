@@ -1,6 +1,6 @@
-const { DataTypes } = require('sequelize');
-const database = require('../utils/database/database');
-const { hash_password, compare } = require('../utils/encryption/hash_passowrd');
+const {DataTypes} = require("sequelize");
+const database = require("../utils/database/database");
+const {hash_password, compare} = require("../utils/encryption/hash_passowrd");
 
 /**
  * @swagger
@@ -29,7 +29,7 @@ const { hash_password, compare } = require('../utils/encryption/hash_passowrd');
  *         - role
  */
 const Admin = database.define(
-	'Admin',
+	"Admin",
 	{
 		id: {
 			type: DataTypes.INTEGER,
@@ -67,7 +67,7 @@ const Admin = database.define(
 		role: {
 			type: DataTypes.STRING,
 			allowNull: false,
-			isIn: ['Super-admin', 'Admin'],
+			isIn: ["Super-admin", "Admin"],
 		},
 	},
 
