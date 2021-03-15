@@ -1,5 +1,6 @@
-const { DataTypes } = require('sequelize');
-const database = require('../utils/database/database');
+const {DataTypes} = require("sequelize");
+const database = require("../utils/database/database");
+const Sequelize = require("sequelize");
 
 /**
  * @swagger
@@ -25,7 +26,7 @@ const database = require('../utils/database/database');
  *         - count
  */
 const topic_level_count = database.define(
-	'Topic_Level_Count',
+	"Topic_Level_Count",
 	{
 		id: {
 			type: DataTypes.INTEGER,
@@ -35,13 +36,13 @@ const topic_level_count = database.define(
 		},
 
 		topic_id: {
-			type: DataTypes.STRING,
+			type: DataTypes.INTEGER,
 			allowNull: false,
 			references: {
-				model: 'Topic',
-				key: 'id',
+				model: "Topic",
+				key: "id",
 				deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE,
-				onDelete: 'CASCADE',
+				onDelete: "CASCADE",
 				hooks: true,
 			},
 		},
@@ -62,4 +63,4 @@ const topic_level_count = database.define(
 	}
 );
 
-module.exports = topic;
+module.exports = topic_level_count;
