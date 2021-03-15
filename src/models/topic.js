@@ -1,5 +1,5 @@
-const { DataTypes } = require('sequelize');
-const database = require('../utils/database/database');
+const {DataTypes} = require("sequelize");
+const database = require("../utils/database/database");
 
 /**
  * @swagger
@@ -25,7 +25,7 @@ const database = require('../utils/database/database');
  *         - type
  */
 const topic = database.define(
-	'Topic',
+	"Topic",
 	{
 		id: {
 			type: DataTypes.INTEGER,

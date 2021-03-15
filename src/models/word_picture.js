@@ -1,64 +1,64 @@
-const { DataTypes } = require('sequelize')
-const database = require('../utils/database/database')
-const Sequelize = require('sequelize')
+const {DataTypes} = require("sequelize");
+const database = require("../utils/database/database");
+const Sequelize = require("sequelize");
 
 const word_picture = database.define(
-    'Word Picture',
-    {
-        id: {
-            type: DataTypes.INTEGER,
-            autoIncrement: true,
-            allowNull: false,
-            primaryKey: true,
-        },
+	"Word Picture",
+	{
+		id: {
+			type: DataTypes.INTEGER,
+			autoIncrement: true,
+			allowNull: false,
+			primaryKey: true,
+		},
 
-        topic_id: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            references: {
-                model: 'Topic',
-                key: 'id',
-                deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE,
-                onDelete: 'CASCADE',
-                hooks: true
-            }
-        },
+		topic_id: {
+			type: DataTypes.INTEGER,
+			allowNull: false,
+			references: {
+				model: "Topic",
+				key: "id",
+				deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE,
+				onDelete: "CASCADE",
+				hooks: true,
+			},
+		},
 
-        question: {
-            type: DataTypes.TEXT,
-            allowNull: false,
-        },
+		question: {
+			type: DataTypes.TEXT,
+			allowNull: false,
+		},
 
-        images: {
-            type: DataTypes.ARRAY(DataTypes.TEXT),
-            allowNull: false,
-        },
+		images: {
+			type: DataTypes.ARRAY(DataTypes.TEXT),
+			allowNull: false,
+		},
 
-        answer: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-        },
+		answer: {
+			type: DataTypes.INTEGER,
+			allowNull: false,
+		},
 
-        level_requirement: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            defaultValue: 1
-        },
+		level_requirement: {
+			type: DataTypes.INTEGER,
+			allowNull: false,
+			defaultValue: 1,
+		},
 
-        explanation: {
-            type: DataTypes.TEXT,
-            allowNull: true,
-        },
+		explanation: {
+			type: DataTypes.TEXT,
+			allowNull: true,
+		},
 
-        deleted: {
-            type: DataTypes.BOOLEAN,
-            defaultValue: false,
-        },
-    },
-    {
-        freezeTableName: true,
-        timestamps: false
-    }
-)
+		deleted: {
+			type: DataTypes.BOOLEAN,
+			defaultValue: false,
+		},
+	},
+	{
+		freezeTableName: true,
+		timestamps: false,
+	}
+);
 
-module.exports = word_picture
+module.exports = word_picture;
