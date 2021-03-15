@@ -5,27 +5,27 @@ const database = require('../utils/database/database');
  * @swagger
  * components:
  *   schemas:
- *     Topic:
+ *     Topic_Level_Count:
  *       type: object
  *       properties:
  *         id:
  *           type: string
  *           descriptions: primary key
- *         name:
+ *         topic_id:
  *           type: string
- *           descriptions: name of the topic
- *         type:
- *           type: string
- *           description: either Grammar or Communicative
- *         image:
- *           type: string
+ *           descriptions: id of the topic
+ *         level:
+ *           type: number
+ *         count:
+ *           type: number
  *       required:
  *         - id
- *         - name
- *         - type
+ *         - topic_id
+ *         - level
+ *         - count
  */
-const topic = database.define(
-	'Topic',
+const topic_level_count = database.define(
+	'Topic_Level_Count',
 	{
 		id: {
 			type: DataTypes.INTEGER,
@@ -34,19 +34,26 @@ const topic = database.define(
 			primaryKey: true,
 		},
 
-		name: {
+		topic_id: {
 			type: DataTypes.STRING,
+			allowNull: false,
+			references: {
+				model: 'Topic',
+				key: 'id',
+				deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE,
+				onDelete: 'CASCADE',
+				hooks: true,
+			},
+		},
+
+		level: {
+			type: DataTypes.INTEGER,
 			allowNull: false,
 		},
 
-		type: {
-			type: DataTypes.STRING,
+		count: {
+			type: DataTypes.INTEGER,
 			allowNull: false,
-		},
-
-		image: {
-			type: DataTypes.STRING,
-			allowNull: true,
 		},
 	},
 	{
