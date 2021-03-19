@@ -11,3 +11,6 @@ const dictionary = require("./dictionary");
 const flashcard = require("./flashcard");
 const admin = require("./admin");
 const topic = require("./topic");
+const topic_lvl_count = require('./topic_level_count')
+const task = require('./task')
+const sub_task = require('./sub_task')
