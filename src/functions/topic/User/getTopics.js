@@ -1,41 +1,24 @@
-const topicModel = require('../../../models/topic')
-const status_codes = require('../../../utils/status_code/status_codes')
-const UserModel = require('../../../models/User')
-const { verifyToken } = require('../../../utils/token/token')
+const topicModel = require("../../../models/topic");
+const topicLevelCountModel = require("../../../models/topic_level_count");
+const status_codes = require("../../../utils/status_code/status_codes");
 
 const getTopics = async (req, res) => {
-    const token = req.header('Authorization').replace('Bearer ','')
-    const data = verifyToken(token)
-    let user = await UserModel.findOne({
-        where: {
-            id: data.userID
-        }
-    })
+	const level = req.query.level;
+	const type = req.query.type;
 
-    const topics = []
+	const eligibleTopics = [];
+	const allTopics = await topicLevelCountModel.findAll({where: {level: level}});
+	for (let topic of allTopics) {
+		if (topic.dataValues.count > 0) {
+			const tempTopics = await topicModel.findAll({
+				where: {id: topic.dataValues.topic_id, type: type},
+			});
 
-    if (!user){
-        return res.status(status.DATA_NOT_FOUND)
-            .json({
-                error: "Could not process request at this moment"
-            })
-    }
+			for (let topic2 of tempTopics) eligibleTopics.push(topic2.dataValues);
+		}
+	}
 
-    const allTopics = await topicModel.findAll()
+	res.status(status_codes.SUCCESS).json(eligibleTopics);
+};
 
-    for (let topic of allTopics){
-        topics.push(topic.dataValues)
-    }
-
-    try {
-        return res.status(status_codes.SUCCESS)
-            .send(topics)
-    }catch (error) {
-        return res.status(status_codes.INTERNAL_SERVER_ERROR)
-            .json({
-                error: "Something went wrong"
-            })
-    }
-}
-
-module.exports = getTopics
+module.exports = getTopics;
