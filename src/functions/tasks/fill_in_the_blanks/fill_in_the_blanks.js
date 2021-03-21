@@ -11,23 +11,14 @@ const findParagraph = async (req, res) => {
 	let limit = parseInt(req.query.limit);
 	let level = parseInt(req.query.level);
 	let topic_id = parseInt(req.query.topic_id);
+
 	const token = req.header("Authorization").replace("Bearer ", "");
 	const data = verifyToken(token);
+
 	let allTasks = [],
 		allSubTasks = [],
 		taskArray = [],
 		subTaskToTaskMap = new Map();
-	let user = await UserModel.findOne({
-		where: {
-			id: data.userID,
-		},
-	});
-
-	if (!user) {
-		return res.status(status.DATA_NOT_FOUND).json({
-			error: "Could not process request at this moment",
-		});
-	}
 
 	const tasks = await taskModel.findAll({
 		offset,

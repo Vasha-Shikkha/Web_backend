@@ -27,7 +27,7 @@ router.get("/user/topics", user_middleware.user_auth, getTopics);
 router.get("/user/task/mcq", findMcq);
 router.get("/user/task/fix_jumbled_sentence", findSentenceToJumble);
 router.get("/user/task/sentence_matching", findSentenceToMatch);
-router.get("/user/task/fill_in_the_blanks", findParagraphs);
+router.get("/user/task/fill_in_the_blanks", user_middleware.user_auth, findParagraphs);
 router.get("/user/task/word_to_picture", findWordPicture);
 
 //dictionary
