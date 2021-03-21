@@ -27,10 +27,6 @@ app.get("/", async (req, res) => {
 	res.status(200).send("Hello, world! VashaShikkha backend here :)").end();
 });
 
-app.get("/testapi", async (req, res) => {
-	res.status(200).send("this is a get method, written for testing elastic beanstalk").end();
-});
-
 app.listen(port, () => {
 	console.log(chalk.keyword("green")("Server is up on port " + port));
 });
