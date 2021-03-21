@@ -1,59 +1,87 @@
-const UserModel = require('../../../models/User')
-const SentenceMatchingModel = require('../../../models/sentence_matching')
-const status = require('../../../utils/status_code/status_codes')
-const { verifyToken } = require('../../../utils/token/token')
-const { Op } = require('sequelize')
+const UserModel = require("../../../models/User");
+const topicModel = require("../../../models/topic");
+const taskModel = require("../../../models/task");
+const subTaskModel = require("../../../models/sub_task");
+const SentenceMatchingModel = require("../../../models/sentence_matching");
+const status = require("../../../utils/status_code/status_codes");
+const {verifyToken} = require("../../../utils/token/token");
+const {Op} = require("sequelize");
 
 const findMatchingPairs = async (req, res) => {
-    let offset = parseInt(req.query.offset)
-    let limit = parseInt(req.query.limit)
-    let topic_id = parseInt(req.query.topic_id)
-    const token = req.header('Authorization').replace('Bearer ','')
-    const data = verifyToken(token)
-    let sentencesToReturn = []
-    let user = await UserModel.findOne({
-        where: {
-            id: data.userID
-        }
-    })
+	let offset = parseInt(req.query.offset);
+	let limit = parseInt(req.query.limit);
+	let level = parseInt(req.query.level);
+	let topic_id = parseInt(req.query.topic_id);
+	const token = req.header("Authorization").replace("Bearer ", "");
+	const data = verifyToken(token);
+	let allTasks = [],
+		allSubTasks = [],
+		taskArray = [],
+		subTaskToTaskMap = new Map();
+	let user = await UserModel.findOne({
+		where: {
+			id: data.userID,
+		},
+	});
 
-    if (!user){
-        return res.status(status.DATA_NOT_FOUND)
-            .json({
-                error: "Could not process request at this moment"
-            })
-    }
+	if (!user) {
+		return res.status(status.DATA_NOT_FOUND).json({
+			error: "Could not process request at this moment",
+		});
+	}
 
-    const user_level = user.dataValues.level
+	const tasks = await taskModel.findAll({
+		offset,
+		limit,
+		where: {
+			topic_id,
+			level,
+		},
+	});
 
-    const sentences = await SentenceMatchingModel.findAll({
-        offset,
-        limit,
-        where: {
-            level_requirement: {
-                topic_id,
-                [Op.lte] : user_level
-            },
-        },
-    })
+	for (let task of tasks) {
+		taskArray.push([]);
+		allTasks.push(task.dataValues.id);
+	}
 
-    for (let sentence of sentences){
-        sentencesToReturn.push({
-            part_one: sentence.dataValues.left_part,
-            part_two: sentence.dataValues.right_part,
-            explanation: sentence.dataValues.explanation,
-        })
-    }
+	const subTasks = await subTaskModel.findAll({
+		where: {
+			task_id: {
+				[Op.in]: allTasks,
+			},
+		},
+	});
 
-    try {
-        return res.status(status.SUCCESS)
-            .send({sentences: sentencesToReturn})
-    }catch (error) {
-        return res.status(status.INTERNAL_SERVER_ERROR)
-            .json({
-                error: "Something went wrong"
-            })
-    }
-}
+	for (let subTask of subTasks) {
+		subTaskToTaskMap.set(subTask.dataValues.id, subTask.dataValues.task_id);
+		allSubTasks.push(subTask.dataValues.id);
+	}
 
-module.exports = findMatchingPairs
+	const sentences = await SentenceMatchingModel.findAll({
+		where: {
+			subTask_id: {
+				[Op.in]: allSubTasks,
+			},
+		},
+	});
+
+	for (let sentence of sentences) {
+		let sentencesToReturn = {
+			part_one: sentence.dataValues.left_part,
+			part_two: sentence.dataValues.right_part,
+			explanation: sentence.dataValues.explanation,
+		};
+
+		taskArray[subTaskToTaskMap.get(sentence.dataValues.subTask_id) - 1].push(sentencesToReturn);
+	}
+
+	try {
+		return res.status(status.SUCCESS).send(taskArray);
+	} catch (error) {
+		return res.status(status.INTERNAL_SERVER_ERROR).json({
+			error: "Something went wrong",
+		});
+	}
+};
+
+module.exports = findMatchingPairs;

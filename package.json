@@ -7,15 +7,15 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "node app.js",
     "build-nodemon": "nodemon app.js",
-    "prettier": "prettier --write src/**/*.{js,css}"
+    "prettier": "prettier --write src/**/*.js src/functions/**/**/*.js"
   },
   "husky": {
-		"hooks": {
-			"pre-push": "echo 'this is pre-push msg'",
-			"pre-commit": "npm run prettier",
-			"post-commit": "echo 'Successfully ran prettier'"
-		}
-	},
+    "hooks": {
+      "pre-push": "echo 'this is pre-push msg'",
+      "pre-commit": "npm run prettier",
+      "post-commit": "echo 'Successfully ran prettier'"
+    }
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

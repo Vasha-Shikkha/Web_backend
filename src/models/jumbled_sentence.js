@@ -12,11 +12,11 @@ const Jumbled_sentence = database.define(
 			primaryKey: true,
 		},
 
-		topic_id: {
+		subTask_id: {
 			type: DataTypes.INTEGER,
 			allowNull: false,
 			references: {
-				model: "Topic",
+				model: "Sub_task",
 				key: "id",
 				deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE,
 				onDelete: "CASCADE",
@@ -27,12 +27,6 @@ const Jumbled_sentence = database.define(
 		original_sentence: {
 			type: DataTypes.TEXT,
 			allowNull: false,
-		},
-
-		level_requirement: {
-			type: DataTypes.INTEGER,
-			allowNull: false,
-			defaultValue: 1,
 		},
 
 		explanation: {
