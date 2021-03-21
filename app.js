@@ -1,15 +1,15 @@
-require('dotenv').config();
-const express = require('express');
-const cors = require('cors');
-const chalk = require('chalk');
-const database = require('./src/utils/database/database');
-const userRouters = require('./src/routes/User');
-const adminRouters = require('./src/routes/Admin');
-const uploadRouter = require('./src/utils/storage/storage');
-const swagger = require('./src/utils/docs/swagger_specs');
+require("dotenv").config();
+const express = require("express");
+const cors = require("cors");
+const chalk = require("chalk");
+const database = require("./src/utils/database/database");
+const userRouters = require("./src/routes/User");
+const adminRouters = require("./src/routes/Admin");
+const uploadRouter = require("./src/utils/storage/storage");
+const swagger = require("./src/utils/docs/swagger_specs");
 
 //Requiring models for now, to be deleted later
-const all_models = require('./src/models/all_models');
+const all_models = require("./src/models/all_models");
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -23,12 +23,16 @@ app.use(userRouters);
 app.use(uploadRouter);
 app.use(adminRouters);
 
-app.get('/', async (req, res) => {
-	res.status(200).send('Hello, world! VashaShikkha backend here :)').end();
+app.get("/", async (req, res) => {
+	res.status(200).send("Hello, world! VashaShikkha backend here :)").end();
+});
+
+app.get("/testapi", async (req, res) => {
+	res.status(200).send("this is a get method, written for testing elastic beanstalk").end();
 });
 
 app.listen(port, () => {
-	console.log(chalk.keyword('green')('Server is up on port ' + port));
+	console.log(chalk.keyword("green")("Server is up on port " + port));
 });
 
 database
@@ -37,10 +41,10 @@ database
 		alter: true,
 	})
 	.then(() => {
-		console.log(chalk.keyword('green')('Successfully synced to database'));
+		console.log(chalk.keyword("green")("Successfully synced to database"));
 	})
 	.catch((err) => {
-		console.log(chalk.keyword('red')('Failed to sync to database'));
+		console.log(chalk.keyword("red")("Failed to sync to database"));
 		console.error(err);
 	});
 
