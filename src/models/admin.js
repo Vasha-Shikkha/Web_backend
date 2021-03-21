@@ -1,6 +1,6 @@
 const {DataTypes} = require("sequelize");
 const database = require("../utils/database/database");
-const {hash_password, compare} = require("../utils/encryption/hash_passowrd");
+const {hash_password, compare} = require("../utils/encryption/hash_password");
 
 /**
  * @swagger

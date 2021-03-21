@@ -1,6 +1,6 @@
 const UserModel = require("../../../models/User");
 const status = require("../../../utils/status_code/status_codes");
-const {compare} = require("../../../utils/encryption/hash_passowrd");
+const {compare} = require("../../../utils/encryption/hash_password");
 const UserTokenModel = require("../../../models/UserToken");
 const {generateToken} = require("../../../utils/token/token");
 const moment = require("moment");
