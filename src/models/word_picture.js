@@ -12,11 +12,11 @@ const word_picture = database.define(
 			primaryKey: true,
 		},
 
-		topic_id: {
+		subTask_id: {
 			type: DataTypes.INTEGER,
 			allowNull: false,
 			references: {
-				model: "Topic",
+				model: "Sub_task",
 				key: "id",
 				deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE,
 				onDelete: "CASCADE",
@@ -37,12 +37,6 @@ const word_picture = database.define(
 		answer: {
 			type: DataTypes.INTEGER,
 			allowNull: false,
-		},
-
-		level_requirement: {
-			type: DataTypes.INTEGER,
-			allowNull: false,
-			defaultValue: 1,
 		},
 
 		explanation: {

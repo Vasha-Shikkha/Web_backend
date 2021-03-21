@@ -12,11 +12,11 @@ const fill_in_the_gaps = database.define(
 			primaryKey: true,
 		},
 
-		topic_id: {
+		subTask_id: {
 			type: DataTypes.INTEGER,
 			allowNull: false,
 			references: {
-				model: "Topic",
+				model: "Sub_task",
 				key: "id",
 				deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE,
 				onDelete: "CASCADE",
@@ -37,18 +37,6 @@ const fill_in_the_gaps = database.define(
 		answers: {
 			type: DataTypes.ARRAY(DataTypes.STRING),
 			allowNull: false,
-		},
-
-		context: {
-			type: DataTypes.BOOLEAN,
-			defaultValue: false,
-			allowNull: false,
-		},
-
-		level_requirement: {
-			type: DataTypes.INTEGER,
-			allowNull: false,
-			defaultValue: 1,
 		},
 
 		explanation: {

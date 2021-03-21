@@ -10,12 +10,12 @@
     "prettier": "prettier --write src/**/*.{js,css}"
   },
   "husky": {
-		"hooks": {
-			"pre-push": "echo 'this is pre-push msg'",
-			"pre-commit": "npm run prettier",
-			"post-commit": "echo 'Successfully ran prettier'"
-		}
-	},
+    "hooks": {
+      "pre-push": "echo 'this is pre-push msg'",
+      "pre-commit": "npm run prettier",
+      "post-commit": "echo 'Successfully ran prettier'"
+    }
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
