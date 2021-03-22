@@ -15,7 +15,7 @@ const insertJumbledSentence = async (req, res) => {
 		tasks.push({
 			topic_id: task.topic_id,
 			level: task.level_requirement,
-			name: "MCQ",
+			name: "Jumbled Sentence",
 		});
 
 		// check if that topic-level-count exists
