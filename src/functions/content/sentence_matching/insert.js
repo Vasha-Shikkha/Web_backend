@@ -1,5 +1,6 @@
 const taskModel = require("../../../models/task");
 const subTaskModel = require("../../../models/sub_task");
+const topicLevelCountModel = require("../../../models/topic_level_count");
 const sentenceMatchingModel = require("../../../models/sentence_matching");
 const status_codes = require("../../../utils/status_code/status_codes");
 
@@ -16,8 +17,26 @@ const insertSentenceMatching = async (req, res) => {
 			level: task.level_requirement,
 			name: "Sentence Matching",
 		});
+
+		// check if that topic-level-count exists
+		// if not then create
+		// else update
+		let topicLevelCount = await topicLevelCountModel.findOne({
+			where: {level: task.level_requirement, topic_id: task.topic_id},
+		});
+
+		if (topicLevelCount) {
+			await topicLevelCount.update({count: topicLevelCount.dataValues.count + 1});
+		} else {
+			await topicLevelCountModel.create({
+				topic_id: task.topic_id,
+				level: task.level_requirement,
+				count: 1,
+			});
+		}
 	}
 
+	// insert the tasks in the task-table
 	await taskModel
 		.bulkCreate(tasks, {
 			fields: ["topic_id", "level", "name"],
@@ -33,6 +52,7 @@ const insertSentenceMatching = async (req, res) => {
 			});
 		});
 
+	// add sub-tasks
 	for (let i in req.body) {
 		let task = req.body[i];
 		for (let j = 0; j < task.subtask.length; j++) {
