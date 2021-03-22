@@ -1,10 +1,7 @@
-const UserModel = require("../../../models/User");
-const topicModel = require("../../../models/topic");
 const taskModel = require("../../../models/task");
 const subTaskModel = require("../../../models/sub_task");
-const McqModel = require("../../../models/mcq");
+const mcqModel = require("../../../models/mcq");
 const status = require("../../../utils/status_code/status_codes");
-const {verifyToken} = require("../../../utils/token/token");
 const {Op} = require("sequelize");
 
 const findMcq = async (req, res) => {
@@ -12,23 +9,11 @@ const findMcq = async (req, res) => {
 	let limit = parseInt(req.query.limit);
 	let level = parseInt(req.query.level);
 	let topic_id = parseInt(req.query.topic_id);
-	const token = req.header("Authorization").replace("Bearer ", "");
-	const data = verifyToken(token);
+
 	let allTasks = [],
 		allSubTasks = [],
-		taskArray = [],
+		taskArray = new Map(),
 		subTaskToTaskMap = new Map();
-	let user = await UserModel.findOne({
-		where: {
-			id: data.userID,
-		},
-	});
-
-	if (!user) {
-		return res.status(status.DATA_NOT_FOUND).json({
-			error: "Could not process request at this moment",
-		});
-	}
 
 	const tasks = await taskModel.findAll({
 		offset,
@@ -36,12 +21,13 @@ const findMcq = async (req, res) => {
 		where: {
 			topic_id,
 			level,
+			name: "MCQ",
 		},
 	});
 
 	for (let task of tasks) {
-		taskArray.push([]);
 		allTasks.push(task.dataValues.id);
+		taskArray.set(task.dataValues.id, []);
 	}
 
 	const subTasks = await subTaskModel.findAll({
@@ -57,7 +43,7 @@ const findMcq = async (req, res) => {
 		allSubTasks.push(subTask.dataValues.id);
 	}
 
-	const mcqs = await McqModel.findAll({
+	const mcqs = await mcqModel.findAll({
 		where: {
 			subTask_id: {
 				[Op.in]: allSubTasks,
@@ -65,19 +51,19 @@ const findMcq = async (req, res) => {
 		},
 	});
 
-	for (mcq of mcqs) {
-		let mcqsToReturn = {
-			Question: mcq.dataValues.question,
-			Options: mcq.dataValues.options,
-			Answer: mcq.dataValues.answer,
-			explanation: mcq.dataValues.explanation,
-		};
-
-		taskArray[subTaskToTaskMap.get(sentence.dataValues.subTask_id) - 1].push(mcqsToReturn);
+	for (let mcq of mcqs) {
+		let temp_arr = [...taskArray.get(subTaskToTaskMap.get(mcq.dataValues.subTask_id))];
+		temp_arr.push(mcq);
+		taskArray.set(subTaskToTaskMap.get(mcq.dataValues.subTask_id), temp_arr);
 	}
 
+	let ret = [];
+	taskArray.forEach((value) => {
+		ret.push(value);
+	});
+
 	try {
-		return res.status(status.SUCCESS).send(taskArray);
+		return res.status(status.SUCCESS).send(ret);
 	} catch (error) {
 		return res.status(status.INTERNAL_SERVER_ERROR).json({
 			error: "Something went wrong",
