@@ -12,7 +12,7 @@ const findMatchingPairs = async (req, res) => {
 
 	let allTasks = [],
 		allSubTasks = [],
-		taskArray = [],
+		taskArray = new Map(),
 		subTaskToTaskMap = new Map();
 
 	const tasks = await taskModel.findAll({
@@ -21,12 +21,13 @@ const findMatchingPairs = async (req, res) => {
 		where: {
 			topic_id,
 			level,
+			name: "Sentence Matching",
 		},
 	});
 
 	for (let task of tasks) {
-		taskArray.push([]);
 		allTasks.push(task.dataValues.id);
+		taskArray.set(task.dataValues.id, []);
 	}
 
 	const subTasks = await subTaskModel.findAll({
@@ -57,11 +58,18 @@ const findMatchingPairs = async (req, res) => {
 			explanation: sentence.dataValues.explanation,
 		};
 
-		taskArray[subTaskToTaskMap.get(sentence.dataValues.subTask_id) - 1].push(sentencesToReturn);
+		let temp_arr = [...taskArray.get(subTaskToTaskMap.get(sentence.dataValues.subTask_id))];
+		temp_arr.push(sentencesToReturn);
+		taskArray.set(subTaskToTaskMap.get(sentence.dataValues.subTask_id), temp_arr);
 	}
 
+	let ret = [];
+	taskArray.forEach((value) => {
+		ret.push(value);
+	});
+
 	try {
-		return res.status(status.SUCCESS).send(taskArray);
+		return res.status(status.SUCCESS).send(ret);
 	} catch (error) {
 		return res.status(status.INTERNAL_SERVER_ERROR).json({
 			error: "Something went wrong",
