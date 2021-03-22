@@ -21,19 +21,7 @@ const insertSentenceMatching = async (req, res) => {
 		// check if that topic-level-count exists
 		// if not then create
 		// else update
-		let topicLevelCount = await topicLevelCountModel.findOne({
-			where: {level: task.level_requirement, topic_id: task.topic_id},
-		});
-
-		if (topicLevelCount) {
-			await topicLevelCount.update({count: topicLevelCount.dataValues.count + 1});
-		} else {
-			await topicLevelCountModel.create({
-				topic_id: task.topic_id,
-				level: task.level_requirement,
-				count: 1,
-			});
-		}
+		await topicLevelCreator(task.topic_id, task.level_requirement);
 	}
 
 	// insert the tasks in the task-table
