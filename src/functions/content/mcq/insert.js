@@ -24,7 +24,75 @@ const insertMCQ = async (req, res) => {
 		await topicLevelCreator(task.topic_id, task.level_requirement);
 	}
 
-	return res.status(200).json({msg: "succ"});
+	// insert the tasks in the task-table
+	await taskModel
+		.bulkCreate(tasks, {
+			fields: ["topic_id", "level", "name"],
+		})
+		.then((res) => {
+			for (let task of res) {
+				taskIDs.push(task.dataValues.id);
+			}
+		})
+		.catch((err) => {
+			return res.status(status_codes.INTERNAL_SERVER_ERROR).send({
+				error: "Something went Wrong",
+			});
+		});
+
+	// add sub-tasks
+	for (let i in req.body) {
+		let task = req.body[i];
+		for (let j = 0; j < task.subtask.length; j++) {
+			subTaskEntries.push({
+				task_id: taskIDs[i],
+			});
+		}
+	}
+
+	await subTaskModel
+		.bulkCreate(subTaskEntries, {
+			fields: ["task_id"],
+		})
+		.then((r) => {
+			for (let subTask of r) {
+				subTaskIDs.push(subTask.dataValues.id);
+			}
+		})
+		.catch((err) => {
+			return res.status(status_codes.INTERNAL_SERVER_ERROR).send({
+				error: "Something went wrong",
+			});
+		});
+
+	let k = 0;
+
+	for (let i in req.body) {
+		let task = req.body[i];
+		for (let j = 0; j < task.subtask.length; j++) {
+			let subTask = task.subtask[j];
+			subTask.subTask_id = subTaskIDs[k];
+			k++;
+			entries.push(subTask);
+		}
+	}
+
+	await mcqModel
+		.bulkCreate(entries, {
+			fields: ["subTask_id", "question", "options", "answer", "explanation"],
+		})
+		.then((r) => {
+			if (r !== undefined)
+				return res.status(status_codes.SUCCESS).send({
+					message: "Content insertion successful",
+				});
+		})
+		.catch((err) => {
+			console.log(err);
+			return res.status(status_codes.INTERNAL_SERVER_ERROR).send({
+				error: "Something went wrong",
+			});
+		});
 };
 
 module.exports = insertMCQ;
