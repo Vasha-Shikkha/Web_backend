@@ -1,9 +1,7 @@
-const UserModel = require("../../../models/User");
 const taskModel = require("../../../models/task");
 const subTaskModel = require("../../../models/sub_task");
 const FIllInTheBlanksModel = require("../../../models/fill_in_the_blanks");
 const status = require("../../../utils/status_code/status_codes");
-const {verifyToken} = require("../../../utils/token/token");
 const {Op} = require("sequelize");
 
 const findParagraph = async (req, res) => {
@@ -11,9 +9,6 @@ const findParagraph = async (req, res) => {
 	let limit = parseInt(req.query.limit);
 	let level = parseInt(req.query.level);
 	let topic_id = parseInt(req.query.topic_id);
-
-	const token = req.header("Authorization").replace("Bearer ", "");
-	const data = verifyToken(token);
 
 	let allTasks = [],
 		allSubTasks = [],
