@@ -10,6 +10,7 @@ const insertFB = async (req, res) => {
 		subTaskEntries = [],
 		subTaskIDs = [],
 		entries = [];
+
 	for (let task of req.body) {
 		tasks.push({
 			topic_id: task.topic_id,
