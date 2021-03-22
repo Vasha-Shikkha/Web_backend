@@ -1,10 +1,7 @@
-const UserModel = require("../../../models/User");
-const topicModel = require("../../../models/topic");
 const taskModel = require("../../../models/task");
 const subTaskModel = require("../../../models/sub_task");
 const SentenceMatchingModel = require("../../../models/sentence_matching");
 const status = require("../../../utils/status_code/status_codes");
-const {verifyToken} = require("../../../utils/token/token");
 const {Op} = require("sequelize");
 
 const findMatchingPairs = async (req, res) => {
@@ -12,23 +9,11 @@ const findMatchingPairs = async (req, res) => {
 	let limit = parseInt(req.query.limit);
 	let level = parseInt(req.query.level);
 	let topic_id = parseInt(req.query.topic_id);
-	const token = req.header("Authorization").replace("Bearer ", "");
-	const data = verifyToken(token);
+
 	let allTasks = [],
 		allSubTasks = [],
-		taskArray = [],
+		taskArray = new Map(),
 		subTaskToTaskMap = new Map();
-	let user = await UserModel.findOne({
-		where: {
-			id: data.userID,
-		},
-	});
-
-	if (!user) {
-		return res.status(status.DATA_NOT_FOUND).json({
-			error: "Could not process request at this moment",
-		});
-	}
 
 	const tasks = await taskModel.findAll({
 		offset,
@@ -36,12 +21,13 @@ const findMatchingPairs = async (req, res) => {
 		where: {
 			topic_id,
 			level,
+			name: "Sentence Matching",
 		},
 	});
 
 	for (let task of tasks) {
-		taskArray.push([]);
 		allTasks.push(task.dataValues.id);
+		taskArray.set(task.dataValues.id, []);
 	}
 
 	const subTasks = await subTaskModel.findAll({
@@ -72,11 +58,18 @@ const findMatchingPairs = async (req, res) => {
 			explanation: sentence.dataValues.explanation,
 		};
 
-		taskArray[subTaskToTaskMap.get(sentence.dataValues.subTask_id) - 1].push(sentencesToReturn);
+		let temp_arr = [...taskArray.get(subTaskToTaskMap.get(sentence.dataValues.subTask_id))];
+		temp_arr.push(sentencesToReturn);
+		taskArray.set(subTaskToTaskMap.get(sentence.dataValues.subTask_id), temp_arr);
 	}
 
+	let ret = [];
+	taskArray.forEach((value) => {
+		ret.push(value);
+	});
+
 	try {
-		return res.status(status.SUCCESS).send(taskArray);
+		return res.status(status.SUCCESS).send(ret);
 	} catch (error) {
 		return res.status(status.INTERNAL_SERVER_ERROR).json({
 			error: "Something went wrong",
