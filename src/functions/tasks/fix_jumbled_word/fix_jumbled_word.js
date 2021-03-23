@@ -1,10 +1,11 @@
 const taskModel = require("../../../models/task");
 const subTaskModel = require("../../../models/sub_task");
-const JumbledSentenceModel = require("../../../models/jumbled_sentence");
+const JumbledWordModel = require("../../../models/jumbled_word");
+const {shuffle} = require("../../../utils/helper_functions");
 const status = require("../../../utils/status_code/status_codes");
 const {Op} = require("sequelize");
 
-const findSentenceToJumble = async (req, res) => {
+const findJumbledWord = async (req, res) => {
 	let offset = parseInt(req.query.offset);
 	let limit = parseInt(req.query.limit);
 	let level = parseInt(req.query.level);
@@ -21,7 +22,7 @@ const findSentenceToJumble = async (req, res) => {
 		where: {
 			topic_id,
 			level,
-			name: "Jumbled Sentence",
+			name: "Jumbled Word",
 		},
 	});
 
@@ -43,7 +44,7 @@ const findSentenceToJumble = async (req, res) => {
 		allSubTasks.push(subTask.dataValues.id);
 	}
 
-	const jumbled_sentences = await JumbledSentenceModel.findAll({
+	const jumbled_word = await JumbledWordModel.findAll({
 		where: {
 			subTask_id: {
 				[Op.in]: allSubTasks,
@@ -51,9 +52,18 @@ const findSentenceToJumble = async (req, res) => {
 		},
 	});
 
-	for (let js of jumbled_sentences) {
+	for (let js of jumbled_word) {
+		let obj_to_return = {
+			id: js.id,
+			subTask_id: js.subTask_id,
+			chunks: shuffle(js.original_word.split("")),
+			ans: js.original_word,
+			paragraph: js.paragraph,
+			explanation: js.explanation,
+		};
+
 		let temp_arr = [...taskArray.get(subTaskToTaskMap.get(js.dataValues.subTask_id))];
-		temp_arr.push(js);
+		temp_arr.push(obj_to_return);
 		taskArray.set(subTaskToTaskMap.get(js.dataValues.subTask_id), temp_arr);
 	}
 
@@ -72,4 +82,4 @@ const findSentenceToJumble = async (req, res) => {
 	}
 };
 
-module.exports = findSentenceToJumble;
+module.exports = findJumbledWord;

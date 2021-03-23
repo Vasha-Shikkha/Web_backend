@@ -1,10 +1,10 @@
-const fixJumbledSentenceModel = require("../../../models/jumbled_sentence");
+const fixJumbledWordModel = require("../../../models/jumbled_word");
 const taskModel = require("../../../models/task");
 const subTaskModel = require("../../../models/sub_task");
 const topicLevelCreator = require("../../../utils/database/topicLevelCreator");
 const status_codes = require("../../../utils/status_code/status_codes");
 
-const insertJumbledSentence = async (req, res) => {
+const insertJumbledWord = async (req, res) => {
 	let tasks = [],
 		taskIDs = [],
 		subTaskEntries = [],
@@ -15,7 +15,7 @@ const insertJumbledSentence = async (req, res) => {
 		tasks.push({
 			topic_id: task.topic_id,
 			level: task.level_requirement,
-			name: "Jumbled Sentence",
+			name: "Jumbled Word",
 		});
 
 		// check if that topic-level-count exists
@@ -77,9 +77,9 @@ const insertJumbledSentence = async (req, res) => {
 		}
 	}
 
-	await fixJumbledSentenceModel
+	await fixJumbledWordModel
 		.bulkCreate(entries, {
-			fields: ["subTask_id", "original_sentence", "explanation", "context"],
+			fields: ["subTask_id", "paragraph", "original_word", "explanation"],
 		})
 		.then((r) => {
 			if (r !== undefined)
@@ -95,4 +95,4 @@ const insertJumbledSentence = async (req, res) => {
 		});
 };
 
-module.exports = insertJumbledSentence;
+module.exports = insertJumbledWord;
