@@ -1,10 +1,11 @@
 const taskModel = require("../../../models/task");
 const subTaskModel = require("../../../models/sub_task");
 const fillInTheBlanksModel = require("../../../models/fill_in_the_blanks");
+const topicLevelCreator = require("../../../utils/database/topicLevelCreator");
 const status_codes = require("../../../utils/status_code/status_codes");
 
 const insertFB = async (req, res) => {
-	req.setTimeout(2 * 1000);
+	// req.setTimeout(2 * 1000);
 	let tasks = [],
 		taskIDs = [],
 		subTaskEntries = [],
@@ -17,6 +18,11 @@ const insertFB = async (req, res) => {
 			level: task.level_requirement,
 			name: "Fill in the Blanks",
 		});
+
+		// check if that topic-level-count exists
+		// if not then create
+		// else update
+		await topicLevelCreator(task.topic_id, task.level_requirement);
 	}
 
 	await taskModel
