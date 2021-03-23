@@ -26,7 +26,7 @@ const findParagraph = async (req, res) => {
 	});
 
 	for (let task of tasks) {
-		taskArray.push([]);
+		allTasks.push(task.dataValues.id);
 		taskArray.set(task.dataValues.id, []);
 	}
 
@@ -59,9 +59,9 @@ const findParagraph = async (req, res) => {
 			explanation: paragraph.dataValues.explanation,
 		};
 
-		let temp_arr = [...taskArray.get(subTaskToTaskMap.get(js.dataValues.subTask_id))];
+		let temp_arr = [...taskArray.get(subTaskToTaskMap.get(paragraph.dataValues.subTask_id))];
 		temp_arr.push(paragraphsToReturn);
-		taskArray.set(subTaskToTaskMap.get(js.dataValues.subTask_id), temp_arr);
+		taskArray.set(subTaskToTaskMap.get(paragraph.dataValues.subTask_id), temp_arr);
 	}
 
 	let ret = [];
@@ -70,7 +70,7 @@ const findParagraph = async (req, res) => {
 	});
 
 	try {
-		return res.status(status.SUCCESS).send(taskArray);
+		return res.status(status.SUCCESS).send(ret);
 	} catch (error) {
 		return res.status(status.INTERNAL_SERVER_ERROR).json({
 			error: "Something went wrong",
