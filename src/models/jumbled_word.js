@@ -2,8 +2,8 @@ const {DataTypes} = require("sequelize");
 const database = require("../utils/database/database");
 const Sequelize = require("sequelize");
 
-const Jumbled_sentence = database.define(
-	"Fix Jumbled Sentence",
+const Jumbled_Word = database.define(
+	"Fix Jumbled Word",
 	{
 		id: {
 			type: DataTypes.INTEGER,
@@ -24,7 +24,12 @@ const Jumbled_sentence = database.define(
 			},
 		},
 
-		original_sentence: {
+		paragraph: {
+			type: DataTypes.TEXT,
+			allowNull: true,
+		},
+
+		original_word: {
 			type: DataTypes.TEXT,
 			allowNull: false,
 		},
@@ -32,12 +37,6 @@ const Jumbled_sentence = database.define(
 		explanation: {
 			type: DataTypes.TEXT,
 			allowNull: true,
-		},
-
-		context: {
-			type: DataTypes.BOOLEAN,
-			defaultValue: false,
-			allowNull: false,
 		},
 
 		deleted: {
@@ -52,4 +51,4 @@ const Jumbled_sentence = database.define(
 	}
 );
 
-module.exports = Jumbled_sentence;
+module.exports = Jumbled_Word;

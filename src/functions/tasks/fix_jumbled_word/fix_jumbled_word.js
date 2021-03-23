@@ -1,34 +1,20 @@
-const UserModel = require("../../../models/User");
-const topicModel = require("../../../models/topic");
 const taskModel = require("../../../models/task");
 const subTaskModel = require("../../../models/sub_task");
-const JumbledSentenceModel = require("../../../models/jumbled_sentence");
+const JumbledWordModel = require("../../../models/jumbled_word");
+const {shuffle} = require("../../../utils/helper_functions");
 const status = require("../../../utils/status_code/status_codes");
-const {verifyToken} = require("../../../utils/token/token");
 const {Op} = require("sequelize");
 
-const findSentenceToJumble = async (req, res) => {
+const findJumbledWord = async (req, res) => {
 	let offset = parseInt(req.query.offset);
 	let limit = parseInt(req.query.limit);
 	let level = parseInt(req.query.level);
 	let topic_id = parseInt(req.query.topic_id);
-	const token = req.header("Authorization").replace("Bearer ", "");
-	const data = verifyToken(token);
+
 	let allTasks = [],
 		allSubTasks = [],
-		taskArray = [],
+		taskArray = new Map(),
 		subTaskToTaskMap = new Map();
-	let user = await UserModel.findOne({
-		where: {
-			id: data.userID,
-		},
-	});
-
-	if (!user) {
-		return res.status(status.DATA_NOT_FOUND).json({
-			error: "Could not process request at this moment",
-		});
-	}
 
 	const tasks = await taskModel.findAll({
 		offset,
@@ -36,12 +22,13 @@ const findSentenceToJumble = async (req, res) => {
 		where: {
 			topic_id,
 			level,
+			name: "Jumbled Word",
 		},
 	});
 
 	for (let task of tasks) {
-		taskArray.push([]);
 		allTasks.push(task.dataValues.id);
+		taskArray.set(task.dataValues.id, []);
 	}
 
 	const subTasks = await subTaskModel.findAll({
@@ -57,7 +44,7 @@ const findSentenceToJumble = async (req, res) => {
 		allSubTasks.push(subTask.dataValues.id);
 	}
 
-	const sentences = await JumbledSentenceModel.findAll({
+	const jumbled_word = await JumbledWordModel.findAll({
 		where: {
 			subTask_id: {
 				[Op.in]: allSubTasks,
@@ -65,17 +52,29 @@ const findSentenceToJumble = async (req, res) => {
 		},
 	});
 
-	for (let sentence of sentences) {
-		let sentenceToReturn = {
-			original_sentence: sentence.dataValues.original_sentence,
-			explanation: sentence.dataValues.explanation,
-			context: sentence.dataValues.context,
+	for (let js of jumbled_word) {
+		let obj_to_return = {
+			id: js.id,
+			subTask_id: js.subTask_id,
+			chunks: shuffle(js.original_word.split("")),
+			answer: js.original_word,
+			paragraph: js.paragraph,
+			explanation: js.explanation,
 		};
-		taskArray[subTaskToTaskMap.get(sentence.dataValues.subTask_id) - 1].push(sentenceToReturn);
+
+		let temp_arr = [...taskArray.get(subTaskToTaskMap.get(js.dataValues.subTask_id))];
+		temp_arr.push(obj_to_return);
+		taskArray.set(subTaskToTaskMap.get(js.dataValues.subTask_id), temp_arr);
 	}
 
+	let ret = [];
+	taskArray.forEach((value) => {
+		// ret.push(value);
+		for (let val of value) ret.push(val);
+	});
+
 	try {
-		return res.status(status.SUCCESS).send(taskArray);
+		return res.status(status.SUCCESS).send(ret);
 	} catch (error) {
 		return res.status(status.INTERNAL_SERVER_ERROR).json({
 			error: "Something went wrong",
@@ -83,4 +82,4 @@ const findSentenceToJumble = async (req, res) => {
 	}
 };
 
-module.exports = findSentenceToJumble;
+module.exports = findJumbledWord;

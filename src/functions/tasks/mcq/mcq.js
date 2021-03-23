@@ -59,7 +59,8 @@ const findMcq = async (req, res) => {
 
 	let ret = [];
 	taskArray.forEach((value) => {
-		ret.push(value);
+		// ret.push(value);
+		for (let val of value) ret.push(val);
 	});
 
 	try {
