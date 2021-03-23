@@ -57,7 +57,7 @@ const findJumbledWord = async (req, res) => {
 			id: js.id,
 			subTask_id: js.subTask_id,
 			chunks: shuffle(js.original_word.split("")),
-			ans: js.original_word,
+			answer: js.original_word,
 			paragraph: js.paragraph,
 			explanation: js.explanation,
 		};
