@@ -5,6 +5,7 @@ const topicLevelCreator = require("../../../utils/database/topicLevelCreator");
 const status_codes = require("../../../utils/status_code/status_codes");
 
 const insertJumbledWord = async (req, res) => {
+	req.setTimeout(2 * 1000);
 	let tasks = [],
 		taskIDs = [],
 		subTaskEntries = [],
