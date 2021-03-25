@@ -12,7 +12,7 @@ const findParagraph = async (req, res) => {
 
 	let allTasks = [],
 		allSubTasks = [],
-		taskArray = [],
+		taskArray = new Map(),
 		subTaskToTaskMap = new Map();
 
 	const tasks = await taskModel.findAll({
@@ -21,12 +21,13 @@ const findParagraph = async (req, res) => {
 		where: {
 			topic_id,
 			level,
+			name: "Fill in the Blanks",
 		},
 	});
 
 	for (let task of tasks) {
-		taskArray.push([]);
 		allTasks.push(task.dataValues.id);
+		taskArray.set(task.dataValues.id, []);
 	}
 
 	const subTasks = await subTaskModel.findAll({
@@ -50,8 +51,6 @@ const findParagraph = async (req, res) => {
 		},
 	});
 
-	console.log(paragraphs);
-
 	for (let paragraph of paragraphs) {
 		let paragraphsToReturn = {
 			paragraph: paragraph.dataValues.paragraph,
@@ -59,11 +58,19 @@ const findParagraph = async (req, res) => {
 			answers: paragraph.dataValues.answers,
 			explanation: paragraph.dataValues.explanation,
 		};
-		taskArray[subTaskToTaskMap.get(paragraph.dataValues.subTask_id) - 1].push(paragraphsToReturn);
+
+		let temp_arr = [...taskArray.get(subTaskToTaskMap.get(paragraph.dataValues.subTask_id))];
+		temp_arr.push(paragraphsToReturn);
+		taskArray.set(subTaskToTaskMap.get(paragraph.dataValues.subTask_id), temp_arr);
 	}
 
+	let ret = [];
+	taskArray.forEach((value) => {
+		ret.push(value);
+	});
+
 	try {
-		return res.status(status.SUCCESS).send(taskArray);
+		return res.status(status.SUCCESS).send(ret);
 	} catch (error) {
 		return res.status(status.INTERNAL_SERVER_ERROR).json({
 			error: "Something went wrong",

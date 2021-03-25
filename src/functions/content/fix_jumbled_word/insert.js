@@ -1,10 +1,10 @@
+const fixJumbledWordModel = require("../../../models/jumbled_word");
 const taskModel = require("../../../models/task");
 const subTaskModel = require("../../../models/sub_task");
-const topicLevelCountModel = require("../../../models/topic_level_count");
-const sentenceMatchingModel = require("../../../models/sentence_matching");
+const topicLevelCreator = require("../../../utils/database/topicLevelCreator");
 const status_codes = require("../../../utils/status_code/status_codes");
 
-const insertSentenceMatching = async (req, res) => {
+const insertJumbledWord = async (req, res) => {
 	req.setTimeout(2 * 1000);
 	let tasks = [],
 		taskIDs = [],
@@ -16,7 +16,7 @@ const insertSentenceMatching = async (req, res) => {
 		tasks.push({
 			topic_id: task.topic_id,
 			level: task.level_requirement,
-			name: "Sentence Matching",
+			name: "Jumbled Word",
 		});
 
 		// check if that topic-level-count exists
@@ -78,9 +78,9 @@ const insertSentenceMatching = async (req, res) => {
 		}
 	}
 
-	await sentenceMatchingModel
+	await fixJumbledWordModel
 		.bulkCreate(entries, {
-			fields: ["subTask_id", "left_part", "right_part", "explanation"],
+			fields: ["subTask_id", "paragraph", "original_word", "explanation"],
 		})
 		.then((r) => {
 			if (r !== undefined)
@@ -96,4 +96,4 @@ const insertSentenceMatching = async (req, res) => {
 		});
 };
 
-module.exports = insertSentenceMatching;
+module.exports = insertJumbledWord;
