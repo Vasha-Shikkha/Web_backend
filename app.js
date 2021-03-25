@@ -23,9 +23,9 @@ app.use(userRouters);
 app.use(uploadRouter);
 app.use(adminRouters);
 
-app.get("/", async (req, res) => {
-	res.status(200).send("Hello, world! VashaShikkha backend here :)").end();
-});
+// app.get("/", async (req, res) => {
+// 	res.status(200).send("Hello, world! VashaShikkha backend here :)").end();
+// });
 
 app.listen(port, () => {
 	console.log(chalk.keyword("green")("Server is up on port " + port));
