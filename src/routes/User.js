@@ -12,6 +12,7 @@ const findWordPicture = require("../functions/tasks/word_to_picture/word_picture
 const lookUpWord = require("../functions/dictionary/dictionary");
 const recentWordSearches = require("../functions/dictionary/flashcard");
 const getTopics = require("../functions/topic/User/getTopics");
+const getAvailableExercises = require("../functions/topic/User/getAvailableExercises");
 
 const user_middleware = require("../middlewares/user_auth");
 
@@ -22,6 +23,9 @@ router.delete("/user/logout", signOut);
 
 //Topics
 router.get("/user/topics", user_middleware.user_auth, getTopics);
+
+// Available Exercises
+router.get("/user/exercises", user_middleware.user_auth, getAvailableExercises);
 
 //Tasks
 router.get("/user/task/mcq", user_middleware.user_auth, findMcq);
