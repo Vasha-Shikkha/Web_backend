@@ -1,7 +1,7 @@
 const taskModel = require("../../../models/task");
 const subTaskModel = require("../../../models/sub_task");
-const topicLevelCountModel = require("../../../models/topic_level_count");
 const sentenceMatchingModel = require("../../../models/sentence_matching");
+const topicLevelCreator = require("../../../utils/database/topicLevelCreator");
 const status_codes = require("../../../utils/status_code/status_codes");
 
 const insertSentenceMatching = async (req, res) => {
