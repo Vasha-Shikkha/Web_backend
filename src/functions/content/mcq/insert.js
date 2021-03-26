@@ -16,6 +16,8 @@ const insertMCQ = async (req, res) => {
 		tasks.push({
 			topic_id: task.topic_id,
 			level: task.level_requirement,
+			instruction: task.instruction,
+			instructionImage: task.instructionImage,
 			name: "MCQ",
 		});
 
