@@ -5,7 +5,7 @@ const sentenceMatchingModel = require("../../../models/sentence_matching");
 const status_codes = require("../../../utils/status_code/status_codes");
 
 const insertSentenceMatching = async (req, res) => {
-	req.setTimeout(2 * 1000);
+	req.setTimeout(10 * 1000);
 
 	let tasks = [],
 		taskIDs = [],
