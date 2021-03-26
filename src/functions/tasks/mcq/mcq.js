@@ -12,6 +12,7 @@ const findMcq = async (req, res) => {
 
 	let allTasks = [],
 		allSubTasks = [],
+		allTaskDetails = new Map(),
 		taskArray = new Map(),
 		subTaskToTaskMap = new Map();
 
@@ -27,6 +28,7 @@ const findMcq = async (req, res) => {
 
 	for (let task of tasks) {
 		allTasks.push(task.dataValues.id);
+		allTaskDetails.set(task.dataValues.id, task.dataValues);
 		taskArray.set(task.dataValues.id, []);
 	}
 
@@ -58,9 +60,8 @@ const findMcq = async (req, res) => {
 	}
 
 	let ret = [];
-	taskArray.forEach((value) => {
-		// ret.push(value);
-		for (let val of value) ret.push(val);
+	taskArray.forEach((value, key) => {
+		ret.push({taskDetail: allTaskDetails.get(key), questions: value});
 	});
 
 	try {
