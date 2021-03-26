@@ -11,6 +11,7 @@ const findMatchingPairs = async (req, res) => {
 	let topic_id = parseInt(req.query.topic_id);
 
 	let allTasks = [],
+		allTaskDetails = new Map(),
 		allSubTasks = [],
 		taskArray = new Map(),
 		subTaskToTaskMap = new Map();
@@ -27,6 +28,7 @@ const findMatchingPairs = async (req, res) => {
 
 	for (let task of tasks) {
 		allTasks.push(task.dataValues.id);
+		allTaskDetails.set(task.dataValues.id, task.dataValues);
 		taskArray.set(task.dataValues.id, []);
 	}
 
@@ -64,8 +66,10 @@ const findMatchingPairs = async (req, res) => {
 	}
 
 	let ret = [];
-	taskArray.forEach((value) => {
-		ret.push(value);
+
+	// key has the task id. send the task detail
+	taskArray.forEach((value, key) => {
+		ret.push({taskDetail: allTaskDetails.get(key), sentences: value});
 	});
 
 	try {
