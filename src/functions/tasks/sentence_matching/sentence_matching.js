@@ -55,8 +55,12 @@ const findMatchingPairs = async (req, res) => {
 
 	for (let sentence of sentences) {
 		let sentencesToReturn = {
-			part_one: sentence.dataValues.left_part.replace(/\<\/b\> /i, "</b>&nbsp;"),
-			part_two: sentence.dataValues.right_part.replace(/\<\/b\> /i, "</b>&nbsp;"),
+			part_one: sentence.dataValues.left_part
+				.replace(/\<\/b\> /i, "</b>&nbsp;")
+				.replace(/ \<b\>/i, "&nbsp;<b>"),
+			part_two: sentence.dataValues.right_part
+				.replace(/\<\/b\> /i, "</b>&nbsp;")
+				.replace(/ \<b\>/i, "&nbsp;<b>"),
 			explanation: sentence.dataValues.explanation,
 		};
 
