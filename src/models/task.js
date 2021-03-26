@@ -3,43 +3,52 @@ const database = require("../utils/database/database");
 const Sequelize = require("sequelize");
 
 const task = database.define(
-    'Task',
-    {
-        id: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            autoIncrement: true,
-            primaryKey: true,
-        },
+	"Task",
+	{
+		id: {
+			type: DataTypes.INTEGER,
+			allowNull: false,
+			autoIncrement: true,
+			primaryKey: true,
+		},
 
-        topic_id: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            references: {
-                model: "Topic",
-                key: "id",
-                deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE,
-                onDelete: "CASCADE",
-                hooks: true,
-            },
-        },
+		topic_id: {
+			type: DataTypes.INTEGER,
+			allowNull: false,
+			references: {
+				model: "Topic",
+				key: "id",
+				deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE,
+				onDelete: "CASCADE",
+				hooks: true,
+			},
+		},
 
-        level: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            defaultValue: 1
-        },
+		level: {
+			type: DataTypes.INTEGER,
+			allowNull: false,
+			defaultValue: 1,
+		},
 
-        name: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        }
-    },
-    {
-        freezeTableName: true,
-        timestamps: false
-    }
-)
+		name: {
+			type: DataTypes.STRING,
+			allowNull: false,
+		},
 
-module.exports = task
+		instruction: {
+			type: DataTypes.TEXT,
+			allowNull: true,
+		},
 
+		instructionImage: {
+			type: DataTypes.STRING,
+			allowNull: true,
+		},
+	},
+	{
+		freezeTableName: true,
+		timestamps: false,
+	}
+);
+
+module.exports = task;
