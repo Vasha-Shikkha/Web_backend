@@ -29,7 +29,7 @@ const insertFB = async (req, res) => {
 
 	await taskModel
 		.bulkCreate(tasks, {
-			fields: ["topic_id", "level", "name"],
+			fields: ["topic_id", "level", "name", "instruction", "instructionImage"],
 		})
 		.then((r) => {
 			for (let task of r) {

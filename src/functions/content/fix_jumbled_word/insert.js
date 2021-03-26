@@ -30,7 +30,7 @@ const insertJumbledWord = async (req, res) => {
 	// insert the tasks in the task-table
 	await taskModel
 		.bulkCreate(tasks, {
-			fields: ["topic_id", "level", "name"],
+			fields: ["topic_id", "level", "name", "instruction", "instructionImage"],
 		})
 		.then((res) => {
 			for (let task of res) {
