@@ -16,6 +16,11 @@ const mcqDelete = require("../functions/content/mcq/delete");
 const JWinsert = require("../functions/content/fix_jumbled_word/insert");
 const JWupdate = require("../functions/content/fix_jumbled_word/edit");
 const JWdelete = require("../functions/content/fix_jumbled_word/delete");
+
+const JSinsert = require("../functions/content/fix_jumbled_sentence/insert");
+const JSupdate = require("../functions/content/fix_jumbled_sentence/edit");
+const JSdelete = require("../functions/content/fix_jumbled_sentence/delete");
+
 const SMinsert = require("../functions/content/sentence_matching/insert");
 const SMupdate = require("../functions/content/sentence_matching/edit");
 const SMdelete = require("../functions/content/sentence_matching/delete");
@@ -58,6 +63,13 @@ router.delete("/content/sentence_matching/delete", SMdelete);
 router.post("/content/jumbled_word/insert", JWinsert);
 router.patch("/content/jumbled_word/update", JWupdate);
 router.delete("/content/jumbled_word/delete", JWdelete);
+
+//---Jumbled sentence
+
+router.post("/content/jumbled_sentence/insert", JSinsert);
+router.patch("/content/jumbled_sentence/update", JSupdate);
+router.delete("/content/jumbled_sentence/delete", JSdelete);
+
 
 //---mcq
 router.post("/content/mcq/insert", mcqInsert);
