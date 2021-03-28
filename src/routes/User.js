@@ -13,6 +13,7 @@ const lookUpWord = require("../functions/dictionary/dictionary");
 const recentWordSearches = require("../functions/dictionary/flashcard");
 const getTopics = require("../functions/topic/User/getTopics");
 const getAvailableExercises = require("../functions/topic/User/getAvailableExercises");
+const findJumbledSentence = require("../functions/tasks/fix_jumbled_sentence/fix_jumbled_sentence");
 
 const user_middleware = require("../middlewares/user_auth");
 
@@ -33,6 +34,7 @@ router.get("/user/task/fix_jumbled_word", user_middleware.user_auth, findJumbled
 router.get("/user/task/sentence_matching", user_middleware.user_auth, findSentenceToMatch);
 router.get("/user/task/fill_in_the_blanks", user_middleware.user_auth, findParagraphs);
 router.get("/user/task/word_to_picture", findWordPicture);
+router.get("/user/task/fix_jumbled_sentence", user_middleware.user_auth, findJumbledSentence);
 
 //dictionary
 router.get("/dictionary", lookUpWord);
