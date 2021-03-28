@@ -56,7 +56,7 @@ const findJumbledSentence = async (req, res) => {
 		let obj_to_return = {
 			id: js.id,
 			subTask_id: js.subTask_id,
-			chunks: shuffle(js.original_sentence),
+			chunks: js.original_sentence,
 			paragraph: js.paragraph,
 			explanation: js.explanation,
 		};
