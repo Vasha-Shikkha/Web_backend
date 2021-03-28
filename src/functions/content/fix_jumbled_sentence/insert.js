@@ -80,7 +80,7 @@ const insertJumbledWord = async (req, res) => {
 		}
 	}
 
-	await fixJumbledWordModel
+	await fixJumbledSentenceModel
 		.bulkCreate(entries, {
 			fields: ["subTask_id", "paragraph", "original_sentence", "explanation"],
 		})
