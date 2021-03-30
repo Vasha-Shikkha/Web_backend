@@ -16,11 +16,13 @@ const getAvailableExercises = require("../functions/topic/User/getAvailableExerc
 const findJumbledSentence = require("../functions/tasks/fix_jumbled_sentence/fix_jumbled_sentence");
 
 const user_middleware = require("../middlewares/user_auth");
+const verify_jwt = require("../functions/Authentication/User/jwtVerifier");
 
 //Authentication
 router.post("/user/register", registration);
 router.post("/user/login", signIn);
 router.delete("/user/logout", signOut);
+router.get("/user/verifyToken", verify_jwt);
 
 //Topics
 router.get("/user/topics", user_middleware.user_auth, getTopics);
