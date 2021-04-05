@@ -35,7 +35,7 @@ const word_picture = database.define(
 		},
 
 		answer: {
-			type: DataTypes.INTEGER,
+			type: DataTypes.STRING,
 			allowNull: false,
 		},
 
