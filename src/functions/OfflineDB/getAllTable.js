@@ -1,6 +1,6 @@
 const topicModel = require("../../models/topic");
 const topicLevelCountModel = require("../../models/topic_level_count");
-const status_codes = require("../../../utils/status_code/status_codes");
+const status_codes = require("../../utils/status_code/status_codes");
 
 exports.getTopicTable = async (req, res) => {
 	let topics = await topicModel.findAll();
