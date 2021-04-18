@@ -78,7 +78,10 @@ router.post('/upload/single', upload.single('image') ,async (req, res) => {
     }
 })
 
-router.post('/upload/multiple', upload.array('images'), async (req, res) => {
+router.post('/upload/multiple', [function (req, res, next){
+    mapping.length = 0
+    next()
+},upload.array('images')], async (req, res) => {
     try{
         let images = []
         for (let image of req.files){
