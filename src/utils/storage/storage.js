@@ -1,5 +1,5 @@
 const express = require('express')
-const router = express.Router()
+const uploadRouter = express.Router()
 const aws = require('aws-sdk')
 const multer = require('multer')
 const multerS3 = require('multer-s3')
@@ -61,25 +61,21 @@ const upload = multer({
     }
 })
 
-router.post('/upload/single', upload.single('image') ,async (req, res) => {
-    try{
+const singleUpload = async (req, res) => {
+    try {
         return res.json({
             message: "Image uploaded successfully",
             url: req.file.location,
             mapping
         })
-    }
-    catch (err) {
+    } catch (err) {
         return res.status(status.INTERNAL_SERVER_ERROR).send({
-            error : "Could not upload image"
+            error: "Could not upload image"
         })
     }
-})
+}
 
-router.post('/upload/multiple', [function (req, res, next){
-    mapping.length = 0
-    next()
-},upload.array('images')], async (req, res) => {
+const multipleUpload = async (req, res) => {
     try{
         let images = []
         for (let image of req.files){
@@ -95,8 +91,21 @@ router.post('/upload/multiple', [function (req, res, next){
             error : "Could not upload image"
         })
     }
-})
+}
 
-module.exports = router
+
+//Routes
+uploadRouter.post('/upload/single', upload.single('image') ,singleUpload)
+uploadRouter.post('/upload/multiple', [function (req, res, next){
+    mapping.length = 0
+    next()
+},upload.array('images')], multipleUpload)
+
+module.exports = {
+    upload,
+    singleUpload,
+    multipleUpload,
+    uploadRouter
+}
 
 

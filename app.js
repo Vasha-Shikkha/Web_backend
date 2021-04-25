@@ -6,7 +6,7 @@ const database = require("./src/utils/database/database");
 const userRouters = require("./src/routes/User");
 const mobileRouters = require("./src/routes/Mobile");
 const adminRouters = require("./src/routes/Admin");
-const uploadRouter = require("./src/utils/storage/storage");
+const {uploadRouter} = require("./src/utils/storage/storage");
 const swagger = require("./src/utils/docs/swagger_specs");
 
 //Requiring models for now, to be deleted later

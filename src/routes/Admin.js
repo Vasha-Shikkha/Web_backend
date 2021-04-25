@@ -36,6 +36,8 @@ const topicInsert = require("../functions/topic/Admin/insert");
 const topicUpdate = require("../functions/topic/Admin/edit");
 const topicDelete = require("../functions/topic/Admin/delete");
 
+const {upload, singleUpload} = require('../utils/storage/storage')
+
 //Authentication
 router.post("/admin/login", signIn);
 router.delete("/admin/logout", signOut);
@@ -45,7 +47,7 @@ router.post("/admin/initial", initialSuperAdmin); //Somehow need to make it one 
 
 //topic table
 router.get("/admin/topic/all", getAllTopics);
-router.post("/admin/topic/insert", topicInsert);
+router.post("/admin/topic/insert",[upload.single('topicImage'), singleUpload], topicInsert);
 router.patch("/admin/topic/update", topicUpdate);
 router.delete("/admin/topic/delete", topicDelete);
 
