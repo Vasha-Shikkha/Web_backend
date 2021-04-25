@@ -2,7 +2,7 @@ const status_codes = require("../utils/status_code/status_codes");
 const adminModel = require("../models/admin");
 const {verifyToken} = require("../utils/token/token");
 
-exports.user_auth = async function (req, res, next) {
+exports.admin_auth = async function (req, res, next) {
     if (req.headers.authorization) {
         const token = req.header("Authorization").replace("Admin ", "");
         verifyToken(token, async (err, data) => {
