@@ -27,6 +27,9 @@ const SMdelete = require("../functions/content/sentence_matching/delete");
 const WPinsert = require("../functions/content/word_to_picture/insert");
 const WPupdate = require("../functions/content/word_to_picture/edit");
 const WPdelete = require("../functions/content/word_to_picture/delete");
+const PWInsert = require("../functions/content/picture_to_word/insert");
+// const PWupdate = require("../functions/content/picture_to_word/edit");
+// const PWdelete = require("../functions/content/picture_to_word/delete");
 
 const getAllTopics = require("../functions/topic/Admin/allTopics");
 const topicInsert = require("../functions/topic/Admin/insert");
@@ -82,5 +85,10 @@ router.delete("/content/mcq/delete", mcqDelete);
 router.post("/content/word_to_picture/insert", WPinsert);
 router.patch("/content/word_to_picture/update", WPupdate);
 router.delete("/content/word_to_picture/delete", WPdelete);
+
+//---Picture to word
+router.post("/content/picture_to_word/insert", PWInsert);
+// router.patch("/content/picture_to_word/update", PWupdate);
+// router.delete("/content/picture_to_word/delete", PWdelete);
 
 module.exports = router;
