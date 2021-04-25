@@ -75,6 +75,17 @@ const singleUpload = async (req, res) => {
     }
 }
 
+const singleUploadMiddleware = async (req, res, next) => {
+    try {
+        req.body.image = req.file.location
+        next()
+    } catch (err) {
+        return res.status(status.INTERNAL_SERVER_ERROR).send({
+            error: "Could not upload image"
+        })
+    }
+}
+
 const multipleUpload = async (req, res) => {
     try{
         let images = []
@@ -103,8 +114,7 @@ uploadRouter.post('/upload/multiple', [function (req, res, next){
 
 module.exports = {
     upload,
-    singleUpload,
-    multipleUpload,
+    singleUploadMiddleware,
     uploadRouter
 }
 
