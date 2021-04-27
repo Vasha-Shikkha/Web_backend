@@ -32,6 +32,10 @@ const PWInsert = require("../functions/content/picture_to_word/insert");
 // const PWupdate = require("../functions/content/picture_to_word/edit");
 // const PWdelete = require("../functions/content/picture_to_word/delete");
 
+const CMInsert = require("../functions/content/caption_matching/insert");
+// const CMupdate = require("../functions/content/caption_matching/edit");
+// const CMdelete = require("../functions/content/caption_matching/delete");
+
 const getAllTopics = require("../functions/topic/Admin/allTopics");
 const topicInsert = require("../functions/topic/Admin/insert");
 const topicUpdate = require("../functions/topic/Admin/edit");
@@ -93,5 +97,10 @@ router.delete("/content/word_to_picture/delete", admin_middleware.admin_auth, WP
 router.post("/content/picture_to_word/insert", admin_middleware.admin_auth, PWInsert);
 // router.patch("/content/picture_to_word/update", admin_middleware.admin_auth, PWupdate);
 // router.delete("/content/picture_to_word/delete", admin_middleware.admin_auth, PWdelete);
+
+//---Caption to Picture
+router.post("/content/caption_matching/insert", admin_middleware.admin_auth, CMInsert);
+// router.patch("/content/caption_matching/update", admin_middleware.admin_auth, CMpdate);
+// router.delete("/content/caption_matching/delete", admin_middleware.admin_auth, CMdelete);
 
 module.exports = router;
