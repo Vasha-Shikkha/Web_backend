@@ -14,3 +14,5 @@ const topic = require("./topic");
 const topic_lvl_count = require("./topic_level_count");
 const task = require("./task");
 const sub_task = require("./sub_task");
+const Picture_to_Word = require('./picture_word')
+const Caption_matching = require('./picture_caption')

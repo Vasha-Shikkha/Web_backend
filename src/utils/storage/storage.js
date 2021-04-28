@@ -1,14 +1,13 @@
 const express = require('express')
-const router = express.Router()
-const fs = require('fs')
+const uploadRouter = express.Router()
 const aws = require('aws-sdk')
-const path = require('path')
 const multer = require('multer')
 const multerS3 = require('multer-s3')
 const status = require('../status_code/status_codes')
 
 const allowedTypes = ['image/jpeg','image/jpg','image/png']
 const imageMaxSize = 2 * 1024 * 1024
+const mapping = []
 
 const filterFileType = (req, file, cb) => {
     if (!allowedTypes.includes(file.mimetype)){
@@ -34,6 +33,11 @@ const generateFileName = (req, file, cb) => {
     const fileNameParts = fileName.split('.')
     const extension = fileNameParts[fileNameParts.length-1]
     const nameInStorage = Date.now().toString() + '.' + extension
+    const Mapping = {
+        original: fileName,
+        changed: nameInStorage
+    }
+    mapping.push(Mapping)
     cb(null, nameInStorage)
 }
 
@@ -57,21 +61,32 @@ const upload = multer({
     }
 })
 
-router.post('/upload/single', upload.single('image') ,async (req, res) => {
-    try{
+const singleUpload = async (req, res) => {
+    try {
         return res.json({
             message: "Image uploaded successfully",
-            url: req.file.location
+            url: req.file.location,
+            mapping
         })
-    }
-    catch (err) {
+    } catch (err) {
         return res.status(status.INTERNAL_SERVER_ERROR).send({
-            error : "Could not upload image"
+            error: "Could not upload image"
         })
     }
-})
+}
 
-router.post('/upload/all', upload.array('images'), async (req, res) => {
+const singleUploadMiddleware = async (req, res, next) => {
+    try {
+        req.body.image = req.file.location
+        next()
+    } catch (err) {
+        return res.status(status.INTERNAL_SERVER_ERROR).send({
+            error: "Could not upload image"
+        })
+    }
+}
+
+const multipleUpload = async (req, res) => {
     try{
         let images = []
         for (let image of req.files){
@@ -79,15 +94,28 @@ router.post('/upload/all', upload.array('images'), async (req, res) => {
         }
         return res.json({
             message: "Images uploaded successfully",
-            urls : images
+            urls : images,
+            mapping
         })
     }catch (err) {
         return res.status(status.INTERNAL_SERVER_ERROR).send({
             error : "Could not upload image"
         })
     }
-})
+}
 
-module.exports = router
+
+//Routes
+uploadRouter.post('/upload/single', upload.single('image') ,singleUpload)
+uploadRouter.post('/upload/multiple', [function (req, res, next){
+    mapping.length = 0
+    next()
+},upload.array('images')], multipleUpload)
+
+module.exports = {
+    upload,
+    singleUploadMiddleware,
+    uploadRouter
+}
 
 

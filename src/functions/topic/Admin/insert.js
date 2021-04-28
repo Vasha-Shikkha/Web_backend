@@ -5,10 +5,7 @@ const createTopic = async (req, res) => {
 	topicModel
 		.create(req.body)
 		.then((r) => {
-			if (r !== undefined)
-				return res.status(status_codes.SUCCESS).send({
-					message: "Topic created successfully",
-				});
+			if (r !== undefined) return res.status(status_codes.SUCCESS).send(r);
 		})
 		.catch((err) => {
 			return res.status(status_codes.INTERNAL_SERVER_ERROR).send({

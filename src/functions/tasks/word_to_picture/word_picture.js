@@ -1,10 +1,7 @@
-const UserModel = require("../../../models/User");
-const topicModel = require("../../../models/topic");
 const taskModel = require("../../../models/task");
 const subTaskModel = require("../../../models/sub_task");
 const WordToPictureModel = require("../../../models/word_picture");
 const status = require("../../../utils/status_code/status_codes");
-const {verifyToken} = require("../../../utils/token/token");
 const {Op} = require("sequelize");
 
 const findWordToPicture = async (req, res) => {
@@ -12,23 +9,12 @@ const findWordToPicture = async (req, res) => {
 	let limit = parseInt(req.query.limit);
 	let level = parseInt(req.query.level);
 	let topic_id = parseInt(req.query.topic_id);
-	const token = req.header("Authorization").replace("Bearer ", "");
-	const data = verifyToken(token);
+
 	let allTasks = [],
 		allSubTasks = [],
-		taskArray = [],
+		allTaskDetails = new Map(),
+		taskArray = new Map(),
 		subTaskToTaskMap = new Map();
-	let user = await UserModel.findOne({
-		where: {
-			id: data.userID,
-		},
-	});
-
-	if (!user) {
-		return res.status(status.DATA_NOT_FOUND).json({
-			error: "Could not process request at this moment",
-		});
-	}
 
 	const tasks = await taskModel.findAll({
 		offset,
@@ -36,12 +22,14 @@ const findWordToPicture = async (req, res) => {
 		where: {
 			topic_id,
 			level,
+			name: "Word to Picture",
 		},
 	});
 
 	for (let task of tasks) {
-		taskArray.push([]);
 		allTasks.push(task.dataValues.id);
+		allTaskDetails.set(task.dataValues.id, task.dataValues);
+		taskArray.set(task.dataValues.id, []);
 	}
 
 	const subTasks = await subTaskModel.findAll({
@@ -65,19 +53,26 @@ const findWordToPicture = async (req, res) => {
 		},
 	});
 
-	for (let exercise of word_to_picture) {
-		let wordPictureToReturn = {
-			question: exercise.dataValues.question,
-			images: exercise.dataValues.images,
-			answer: exercise.dataValues.answer,
-			explanation: exercise.dataValues.explanation,
-		};
+	for (let wp of word_to_picture) {
+		let exercise = {
+			question: wp.dataValues.question,
+			images: wp.dataValues.images,
+			answer: wp.dataValues.answer,
+			explanation: wp.dataValues.explanation
+		}
 
-		taskArray[subTaskToTaskMap.get(sentence.dataValues.subTask_id) - 1].push(wordPictureToReturn);
+		let temp_arr = [...taskArray.get(subTaskToTaskMap.get(mcq.dataValues.subTask_id))];
+		temp_arr.push(exercise);
+		taskArray.set(subTaskToTaskMap.get(mcq.dataValues.subTask_id), temp_arr);
 	}
 
+	let ret = [];
+	taskArray.forEach((value, key) => {
+		ret.push({taskDetail: allTaskDetails.get(key), questions: value});
+	});
+
 	try {
-		return res.status(status.SUCCESS).send(taskArray);
+		return res.status(status.SUCCESS).send(ret);
 	} catch (error) {
 		return res.status(status.INTERNAL_SERVER_ERROR).json({
 			error: "Something went wrong",
