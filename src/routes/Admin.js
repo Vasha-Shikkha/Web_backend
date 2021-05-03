@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const signIn = require("../functions/Authentication/Admin/signIn");
 const signOut = require("../functions/Authentication/Admin/signOut");
+const admin_middleware = require('../middlewares/admin_auth')
 const createAdmin = require("../functions/Authentication/Admin/createAdmin");
 const updateRole = require("../functions/Authentication/Admin/changeRole");
 const initialSuperAdmin = require("../functions/Authentication/Admin/initialCreate");
@@ -27,58 +28,79 @@ const SMdelete = require("../functions/content/sentence_matching/delete");
 const WPinsert = require("../functions/content/word_to_picture/insert");
 const WPupdate = require("../functions/content/word_to_picture/edit");
 const WPdelete = require("../functions/content/word_to_picture/delete");
+const PWInsert = require("../functions/content/picture_to_word/insert");
+// const PWupdate = require("../functions/content/picture_to_word/edit");
+// const PWdelete = require("../functions/content/picture_to_word/delete");
+
+const CMInsert = require("../functions/content/caption_matching/insert");
+// const CMupdate = require("../functions/content/caption_matching/edit");
+// const CMdelete = require("../functions/content/caption_matching/delete");
+
+const getAllTopics = require("../functions/topic/Admin/allTopics");
 const topicInsert = require("../functions/topic/Admin/insert");
 const topicUpdate = require("../functions/topic/Admin/edit");
 const topicDelete = require("../functions/topic/Admin/delete");
 
+const {upload, singleUploadMiddleware} = require('../utils/storage/storage')
+
 //Authentication
 router.post("/admin/login", signIn);
 router.delete("/admin/logout", signOut);
-router.post("/admin/create_admin", createAdmin);
-router.patch("/admin/update_role", updateRole);
+router.post("/admin/create_admin", admin_middleware.admin_auth, createAdmin);
+router.patch("/admin/update_role", admin_middleware.admin_auth, updateRole);
 router.post("/admin/initial", initialSuperAdmin); //Somehow need to make it one time use
 
 //topic table
-router.post("/admin/topic/insert", topicInsert);
-router.patch("/admin/topic/update", topicUpdate);
-router.delete("/admin/topic/delete", topicDelete);
+router.get("/admin/topic/all", admin_middleware.admin_auth, getAllTopics);
+router.post("/admin/topic/insert", admin_middleware.admin_auth, [upload.single('topicImage'), singleUploadMiddleware], topicInsert);
+router.patch("/admin/topic/update", admin_middleware.admin_auth, topicUpdate);
+router.delete("/admin/topic/delete", admin_middleware.admin_auth, topicDelete);
 
 //Dictionary and content
 
 //---Dictionary
-router.post("/dictionary/insert", insertIntoDictionary);
-router.delete("/dictionary/deleteAll", dumpDictionary);
+router.post("/dictionary/insert", admin_middleware.admin_auth, insertIntoDictionary);
+router.delete("/dictionary/deleteAll", admin_middleware.admin_auth, dumpDictionary);
 
 //---Fill in the blanks
-router.post("/content/fill_in_the_blanks/insert", FBinsert);
-router.patch("/content/fill_in_the_blanks/update", FBupdate);
-router.delete("/content/fill_in_the_blanks/delete", FBdelete);
+router.post("/content/fill_in_the_blanks/insert", admin_middleware.admin_auth, FBinsert);
+router.patch("/content/fill_in_the_blanks/update", admin_middleware.admin_auth, FBupdate);
+router.delete("/content/fill_in_the_blanks/delete", admin_middleware.admin_auth, FBdelete);
 
 //---Sentence matching
-router.post("/content/sentence_matching/insert", SMinsert);
-router.patch("/content/sentence_matching/update", SMupdate);
-router.delete("/content/sentence_matching/delete", SMdelete);
+router.post("/content/sentence_matching/insert", admin_middleware.admin_auth, SMinsert);
+router.patch("/content/sentence_matching/update", admin_middleware.admin_auth, SMupdate);
+router.delete("/content/sentence_matching/delete", admin_middleware.admin_auth, SMdelete);
 
 //---Jumbled word
-router.post("/content/jumbled_word/insert", JWinsert);
-router.patch("/content/jumbled_word/update", JWupdate);
-router.delete("/content/jumbled_word/delete", JWdelete);
+router.post("/content/jumbled_word/insert", admin_middleware.admin_auth, JWinsert);
+router.patch("/content/jumbled_word/update", admin_middleware.admin_auth, JWupdate);
+router.delete("/content/jumbled_word/delete", admin_middleware.admin_auth, JWdelete);
 
 //---Jumbled sentence
 
-router.post("/content/jumbled_sentence/insert", JSinsert);
-router.patch("/content/jumbled_sentence/update", JSupdate);
-router.delete("/content/jumbled_sentence/delete", JSdelete);
-
+router.post("/content/jumbled_sentence/insert", admin_middleware.admin_auth, JSinsert);
+router.patch("/content/jumbled_sentence/update", admin_middleware.admin_auth, JSupdate);
+router.delete("/content/jumbled_sentence/delete", admin_middleware.admin_auth, JSdelete);
 
 //---mcq
-router.post("/content/mcq/insert", mcqInsert);
-router.patch("/content/mcq/update", mcqUpdate);
-router.delete("/content/mcq/delete", mcqDelete);
+router.post("/content/mcq/insert", admin_middleware.admin_auth, mcqInsert);
+router.patch("/content/mcq/update", admin_middleware.admin_auth, mcqUpdate);
+router.delete("/content/mcq/delete", admin_middleware.admin_auth, mcqDelete);
 
 //---Word to picture
-router.post("/content/word_to_picture/insert", WPinsert);
-router.patch("/content/word_to_picture/update", WPupdate);
-router.delete("/content/word_to_picture/delete", WPdelete);
+router.post("/content/word_to_picture/insert", admin_middleware.admin_auth, WPinsert);
+router.patch("/content/word_to_picture/update", admin_middleware.admin_auth, WPupdate);
+router.delete("/content/word_to_picture/delete", admin_middleware.admin_auth, WPdelete);
+
+//---Picture to word
+router.post("/content/picture_to_word/insert", admin_middleware.admin_auth, PWInsert);
+// router.patch("/content/picture_to_word/update", admin_middleware.admin_auth, PWupdate);
+// router.delete("/content/picture_to_word/delete", admin_middleware.admin_auth, PWdelete);
+
+//---Caption to Picture
+router.post("/content/caption_matching/insert", admin_middleware.admin_auth, CMInsert);
+// router.patch("/content/caption_matching/update", admin_middleware.admin_auth, CMpdate);
+// router.delete("/content/caption_matching/delete", admin_middleware.admin_auth, CMdelete);
 
 module.exports = router;
