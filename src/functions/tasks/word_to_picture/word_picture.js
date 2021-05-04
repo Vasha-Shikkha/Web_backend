@@ -58,12 +58,12 @@ const findWordToPicture = async (req, res) => {
 			question: wp.dataValues.question,
 			images: wp.dataValues.images,
 			answer: wp.dataValues.answer,
-			explanation: wp.dataValues.explanation
-		}
+			explanation: wp.dataValues.explanation,
+		};
 
-		let temp_arr = [...taskArray.get(subTaskToTaskMap.get(mcq.dataValues.subTask_id))];
+		let temp_arr = [...taskArray.get(subTaskToTaskMap.get(wp.dataValues.subTask_id))];
 		temp_arr.push(exercise);
-		taskArray.set(subTaskToTaskMap.get(mcq.dataValues.subTask_id), temp_arr);
+		taskArray.set(subTaskToTaskMap.get(wp.dataValues.subTask_id), temp_arr);
 	}
 
 	let ret = [];
