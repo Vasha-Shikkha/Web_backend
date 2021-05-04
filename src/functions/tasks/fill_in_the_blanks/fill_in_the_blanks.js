@@ -12,6 +12,7 @@ const findParagraph = async (req, res) => {
 
 	let allTasks = [],
 		allSubTasks = [],
+		allTaskDetails = new Map(),
 		taskArray = new Map(),
 		subTaskToTaskMap = new Map();
 
@@ -27,6 +28,7 @@ const findParagraph = async (req, res) => {
 
 	for (let task of tasks) {
 		allTasks.push(task.dataValues.id);
+		allTaskDetails.set(task.dataValues.id,task.dataValues);
 		taskArray.set(task.dataValues.id, []);
 	}
 
@@ -53,6 +55,8 @@ const findParagraph = async (req, res) => {
 
 	for (let paragraph of paragraphs) {
 		let paragraphsToReturn = {
+			id: paragraph.id,
+			subTask_id: paragraph.subTask_id,
 			paragraph: paragraph.dataValues.paragraph,
 			options: paragraph.dataValues.options,
 			answers: paragraph.dataValues.answers,
@@ -65,8 +69,8 @@ const findParagraph = async (req, res) => {
 	}
 
 	let ret = [];
-	taskArray.forEach((value) => {
-		ret.push(value);
+	taskArray.forEach((value,key) => {
+		ret.push({taskDetail: allTaskDetails.get(key),questions:value});
 	});
 
 	try {
