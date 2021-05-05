@@ -14,10 +14,11 @@ const recentWordSearches = require("../functions/dictionary/flashcard");
 const getTopics = require("../functions/topic/User/getTopics");
 const getAvailableExercises = require("../functions/topic/User/getAvailableExercises");
 const findJumbledSentence = require("../functions/tasks/fix_jumbled_sentence/fix_jumbled_sentence");
-const findPictureWord = require('../functions/tasks/picture_to_word/picture_word')
-const findMatchingCaption = require('../functions/tasks/caption_matching/caption_matching')
+const findPictureWord = require("../functions/tasks/picture_to_word/picture_word");
+const findMatchingCaption = require("../functions/tasks/caption_matching/caption_matching");
 const user_middleware = require("../middlewares/user_auth");
 const verify_jwt = require("../functions/Authentication/User/jwtVerifier");
+const taskList = require("../functions/tasks/getTasks");
 
 //Authentication
 router.post("/user/register", registration);
@@ -32,6 +33,8 @@ router.get("/user/topics", user_middleware.user_auth, getTopics);
 router.get("/user/exercises", user_middleware.user_auth, getAvailableExercises);
 
 //Tasks
+router.get("/user/task/all", user_middleware.user_auth, taskList);
+
 router.get("/user/task/mcq", user_middleware.user_auth, findMcq);
 router.get("/user/task/fix_jumbled_word", user_middleware.user_auth, findJumbledWord);
 router.get("/user/task/sentence_matching", user_middleware.user_auth, findSentenceToMatch);
