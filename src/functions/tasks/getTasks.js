@@ -1,7 +1,6 @@
 const taskModel = require("../../models/task");
 const solveHistoryModel = require("../../models/solve_history");
 const status = require("../../utils/status_code/status_codes");
-const {Op} = require("sequelize");
 
 const getTasks = async (req, res) => {
 	let offset = parseInt(req.query.offset);
@@ -21,11 +20,15 @@ const getTasks = async (req, res) => {
 				{
 					model: solveHistoryModel,
 					required: false,
+					where: {
+						user_id: req.user.id,
+					},
 				},
 			],
 			order: [
-				[taskModel.associations.Solve_History, "solved_status", "asc"],
-				[taskModel.associations.Solve_History, "attempted", "desc"],
+				[{model: solveHistoryModel}, "solved_status", "asc"],
+				[{model: solveHistoryModel}, "attempted", "desc"],
+				["id", "asc"],
 			],
 		})
 		.then((val) => res.status(status.SUCCESS).json(val))

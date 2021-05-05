@@ -13,17 +13,17 @@ const Solve_History = database.define(
 			primaryKey: true,
 		},
 
-		task_id: {
-			type: DataTypes.INTEGER,
-			allowNull: false,
-			references: {
-				model: "Task",
-				key: "id",
-				deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE,
-				onDelete: "CASCADE",
-				hooks: true,
-			},
-		},
+		// task_id: {
+		// 	type: DataTypes.INTEGER,
+		// 	allowNull: false,
+		// 	references: {
+		// 		model: "Task",
+		// 		key: "id",
+		// 		deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE,
+		// 		onDelete: "CASCADE",
+		// 		hooks: true,
+		// 	},
+		// },
 
 		user_id: {
 			type: DataTypes.INTEGER,
