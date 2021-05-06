@@ -1,7 +1,6 @@
 const {DataTypes} = require("sequelize");
 const database = require("../utils/database/database");
 const Sequelize = require("sequelize");
-const taskModel = require("../models/task");
 
 const Solve_History = database.define(
 	"Solve_History",
@@ -13,17 +12,17 @@ const Solve_History = database.define(
 			primaryKey: true,
 		},
 
-		// task_id: {
-		// 	type: DataTypes.INTEGER,
-		// 	allowNull: false,
-		// 	references: {
-		// 		model: "Task",
-		// 		key: "id",
-		// 		deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE,
-		// 		onDelete: "CASCADE",
-		// 		hooks: true,
-		// 	},
-		// },
+		task_id: {
+			type: DataTypes.INTEGER,
+			allowNull: false,
+			references: {
+				model: "Task",
+				key: "id",
+				deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE,
+				onDelete: "CASCADE",
+				hooks: true,
+			},
+		},
 
 		user_id: {
 			type: DataTypes.INTEGER,
@@ -60,6 +59,6 @@ const Solve_History = database.define(
 	}
 );
 
-taskModel.hasMany(Solve_History);
+//taskModel.hasMany(Solve_History);
 
 module.exports = Solve_History;
