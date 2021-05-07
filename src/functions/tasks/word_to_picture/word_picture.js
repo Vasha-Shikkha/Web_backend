@@ -55,6 +55,8 @@ const findWordToPicture = async (req, res) => {
 
 	for (let wp of word_to_picture) {
 		let exercise = {
+			id: wp.id,
+			subTask_id: wp.subTask_id,
 			question: wp.dataValues.question,
 			images: wp.dataValues.images,
 			answer: wp.dataValues.answer,

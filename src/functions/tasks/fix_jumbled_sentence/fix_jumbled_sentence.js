@@ -13,6 +13,7 @@ const findJumbledSentence = async (req, res) => {
 
 	let allTasks = [],
 		allSubTasks = [],
+		allTaskDetails = new Map(),
 		taskArray = new Map(),
 		subTaskToTaskMap = new Map();
 
@@ -28,6 +29,7 @@ const findJumbledSentence = async (req, res) => {
 
 	for (let task of tasks) {
 		allTasks.push(task.dataValues.id);
+		allTaskDetails.set(task.dataValues.id,task.dataValues);
 		taskArray.set(task.dataValues.id, []);
 	}
 
@@ -67,9 +69,15 @@ const findJumbledSentence = async (req, res) => {
 	}
 
 	let ret = [];
-	taskArray.forEach((value) => {
+	taskArray.forEach((value,key) => {
 		// ret.push(value);
-		for (let val of value) ret.push(val);
+		
+		let values=[];
+		for(let val of value) values.push(val);
+		ret.push({taskDetail: allTaskDetails.get(key),questions:values});
+		
+		
+		//for (let val of value) ret.push(val);
 	});
 
 	try {
