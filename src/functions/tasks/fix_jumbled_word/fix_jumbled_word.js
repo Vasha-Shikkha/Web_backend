@@ -64,15 +64,19 @@ const findJumbledWord = async (req, res) => {
 			explanation: jw.explanation,
 		};
 
-		let temp_arr = [...taskArray.get(subTaskToTaskMap.get(js.dataValues.subTask_id))];
+		let temp_arr = [...taskArray.get(subTaskToTaskMap.get(jw.dataValues.subTask_id))];
 		temp_arr.push(obj_to_return);
 		taskArray.set(subTaskToTaskMap.get(jw.dataValues.subTask_id), temp_arr);
 	}
 
 	let ret = [];
-	taskArray.forEach((value) => {
+	taskArray.forEach((key,value) => {
 		// ret.push(value);
-		for (let val of value) ret.push(val);
+
+		let values=[];
+		for(let val of value) values.push(val);
+		ret.push({taskDetail: allTaskDetails.get(key),questions:values});
+		//for (let val of value) ret.push(val);
 	});
 
 	try {
