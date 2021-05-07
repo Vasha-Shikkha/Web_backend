@@ -1,6 +1,7 @@
 const taskModel = require("../../models/task");
 const solveHistoryModel = require("../../models/solve_history");
 const status = require("../../utils/status_code/status_codes");
+const TaskFactory = require("./TaskFactory");
 
 const getTasks = async (req, res) => {
 	let offset = parseInt(req.query.offset);
@@ -31,7 +32,10 @@ const getTasks = async (req, res) => {
 				["id", "asc"],
 			],
 		})
-		.then((val) => res.status(status.SUCCESS).json(val))
+		.then(async (val) => {
+			let ret = await TaskFactory(val);
+			res.status(status.SUCCESS).json(ret);
+		})
 		.catch((err) => {
 			console.log(err);
 			res.status(status.INTERNAL_SERVER_ERROR).json({error: "Something Went Wrong"});

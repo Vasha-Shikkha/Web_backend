@@ -1,5 +1,6 @@
 const {DataTypes} = require("sequelize");
 const database = require("../utils/database/database");
+const taskModel = require("../models/task");
 const Sequelize = require("sequelize");
 
 const Solve_History = database.define(
@@ -59,6 +60,8 @@ const Solve_History = database.define(
 	}
 );
 
-//taskModel.hasMany(Solve_History);
+taskModel.hasMany(Solve_History, {
+	foreignKey: "task_id",
+});
 
 module.exports = Solve_History;
