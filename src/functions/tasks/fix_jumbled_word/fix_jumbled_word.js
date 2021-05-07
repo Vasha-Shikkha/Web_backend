@@ -13,6 +13,7 @@ const findJumbledWord = async (req, res) => {
 
 	let allTasks = [],
 		allSubTasks = [],
+		allTaskDetails = new Map(),
 		taskArray = new Map(),
 		subTaskToTaskMap = new Map();
 
@@ -28,6 +29,7 @@ const findJumbledWord = async (req, res) => {
 
 	for (let task of tasks) {
 		allTasks.push(task.dataValues.id);
+		allTaskDetails.set(task.dataValues.id,task.dataValues);
 		taskArray.set(task.dataValues.id, []);
 	}
 
@@ -52,25 +54,29 @@ const findJumbledWord = async (req, res) => {
 		},
 	});
 
-	for (let js of jumbled_word) {
+	for (let jw of jumbled_word) {
 		let obj_to_return = {
-			id: js.id,
-			subTask_id: js.subTask_id,
-			chunks: shuffle(js.original_word.split("")),
-			answer: js.original_word,
-			paragraph: js.paragraph,
-			explanation: js.explanation,
+			id: jw.id,
+			subTask_id: jw.subTask_id,
+			chunks: shuffle(jw.original_word.split("")),
+			answer: jw.original_word,
+			paragraph: jw.paragraph,
+			explanation: jw.explanation,
 		};
 
-		let temp_arr = [...taskArray.get(subTaskToTaskMap.get(js.dataValues.subTask_id))];
+		let temp_arr = [...taskArray.get(subTaskToTaskMap.get(jw.dataValues.subTask_id))];
 		temp_arr.push(obj_to_return);
-		taskArray.set(subTaskToTaskMap.get(js.dataValues.subTask_id), temp_arr);
+		taskArray.set(subTaskToTaskMap.get(jw.dataValues.subTask_id), temp_arr);
 	}
 
 	let ret = [];
-	taskArray.forEach((value) => {
+	taskArray.forEach((key,value) => {
 		// ret.push(value);
-		for (let val of value) ret.push(val);
+
+		let values=[];
+		for(let val of value) values.push(val);
+		ret.push({taskDetail: allTaskDetails.get(key),questions:values});
+		//for (let val of value) ret.push(val);
 	});
 
 	try {
