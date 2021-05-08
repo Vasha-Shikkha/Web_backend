@@ -15,6 +15,7 @@ const FetchSentenceMatching = async (subTaskId) => {
 	let returnableQuestion = [];
 	for (let sentence of questions) {
 		let exercise = {
+			subTaskId: sentence.dataValues.subTask_id,
 			part_one: sentence.dataValues.left_part
 				.replace(/\<\/b\> /i, "</b>&nbsp;")
 				.replace(/ \<b\>/i, "&nbsp;<b>"),
