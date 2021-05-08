@@ -2,7 +2,7 @@ const JumbledWordModel = require("../../../models/jumbled_word");
 const {shuffle} = require("../../../utils/helper_functions");
 const {Op} = require("sequelize");
 
-const fetchJumbledWord = async (subTaskId) => {
+const FetchJumbledWord = async (subTaskId) => {
 	const questions = await JumbledWordModel.findAll({
 		where: {
 			subTask_id: {
@@ -30,4 +30,4 @@ const fetchJumbledWord = async (subTaskId) => {
 	return {error: false, question: returnableQuestion};
 };
 
-module.exports = fetchJumbledWord;
+module.exports = FetchJumbledWord;
