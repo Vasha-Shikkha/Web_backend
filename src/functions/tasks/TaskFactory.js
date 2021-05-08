@@ -5,6 +5,7 @@ const FetchPictureToWord = require("./picture_to_word/pictureToWord");
 const FetchMCQ = require("./mcq/mcq");
 const FetchJumbledWord = require("./fix_jumbled_word/jumbledWord");
 const FetchJumbledSentence = require("./fix_jumbled_sentence/jumbledSentence");
+const FetchFillInTheBlanks = require("./fill_in_the_blanks/fillInTheBlanks");
 
 const TaskFactory = async (tasks) => {
 	let questions = [];
@@ -40,6 +41,9 @@ const TaskFactory = async (tasks) => {
 				break;
 			case "Jumbled Sentence":
 				data = await FetchJumbledSentence(subTaskId);
+				break;
+			case "Fill in the Blanks":
+				data = await FetchFillInTheBlanks(subTaskId);
 				break;
 			default:
 				break;
