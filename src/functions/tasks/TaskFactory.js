@@ -3,6 +3,7 @@ const FetchWordToPicture = require("./word_to_picture/wordToPicture");
 const FetchSentenceMatching = require("./sentence_matching/sentenceMatching");
 const FetchPictureToWord = require("./picture_to_word/pictureToWord");
 const FetchMCQ = require("./mcq/mcq");
+const fetchJumbledWord = require("./fix_jumbled_word/jumbledWord");
 
 const TaskFactory = async (tasks) => {
 	let questions = [];
@@ -32,6 +33,9 @@ const TaskFactory = async (tasks) => {
 				break;
 			case "MCQ":
 				data = await FetchMCQ(subTaskId);
+				break;
+			case "Jumbled Word":
+				data = await fetchJumbledWord(subTaskId);
 				break;
 			default:
 				break;
