@@ -1,8 +1,11 @@
-const WordToPictureModel = require("../../../models/word_picture");
+const taskModel = require("../../../models/task");
+const subTaskModel = require("../../../models/sub_task");
+const PictureToWordModel = require("../../../models/picture_word");
+const status = require("../../../utils/status_code/status_codes");
 const {Op} = require("sequelize");
 
-const FetchWordToPicture = async (subTaskId) => {
-	let questions = await WordToPictureModel.findAll({
+const FetchPictureToWord = async (subTaskId) => {
+	const questions = await PictureToWordModel.findAll({
 		where: {
 			subTask_id: {
 				[Op.in]: subTaskId,
@@ -28,4 +31,4 @@ const FetchWordToPicture = async (subTaskId) => {
 	return {error: false, question: returnableQuestion};
 };
 
-module.exports = FetchWordToPicture;
+module.exports = FetchPictureToWord;

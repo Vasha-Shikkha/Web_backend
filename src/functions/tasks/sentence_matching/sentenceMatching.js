@@ -28,7 +28,7 @@ const FetchSentenceMatching = async (subTaskId) => {
 		returnableQuestion.push(exercise);
 	}
 
-	return {error: null, question: returnableQuestion};
+	return {error: false, question: returnableQuestion};
 };
 
 module.exports = FetchSentenceMatching;
