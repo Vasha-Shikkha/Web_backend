@@ -2,6 +2,7 @@ const subTaskModel = require("../../models/sub_task");
 const FetchWordToPicture = require("./word_to_picture/wordToPicture");
 const FetchSentenceMatching = require("./sentence_matching/sentenceMatching");
 const FetchPictureToWord = require("./picture_to_word/pictureToWord");
+const FetchMCQ = require("./mcq/mcq");
 
 const TaskFactory = async (tasks) => {
 	let questions = [];
@@ -28,6 +29,9 @@ const TaskFactory = async (tasks) => {
 				break;
 			case "Picture to Word":
 				data = await FetchPictureToWord(subTaskId);
+				break;
+			case "MCQ":
+				data = await FetchMCQ(subTaskId);
 				break;
 			default:
 				break;
