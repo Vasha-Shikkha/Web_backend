@@ -9,31 +9,29 @@ const getTasks = async (req, res) => {
 	let level = parseInt(req.query.level);
 	let topic_id = parseInt(req.query.topic_id);
 
-	// await taskModel
-	// 	.findAll({
-	// 		offset,
-	// 		limit,
-	// 		where: {
-	// 			topic_id,
-	// 			level,
-	// 		},
-	// 		include: [
-	// 			{
-	// 				model: solveHistoryModel,
-	// 				required: false,
-	// 				where: {
-	// 					user_id: req.user.id,
-	// 				},
-	// 			},
-	// 		],
-	// 		order: [
-	// 			[{model: solveHistoryModel}, "solved_status", "asc"],
-	// 			[{model: solveHistoryModel}, "attempted", "desc"],
-	// 			["id", "asc"],
-	// 		],
-	// 	})
-	taskModel
-		.findAll()
+	await taskModel
+		.findAll({
+			offset,
+			limit,
+			where: {
+				topic_id,
+				level,
+			},
+			include: [
+				{
+					model: solveHistoryModel,
+					required: false,
+					where: {
+						user_id: req.user.id,
+					},
+				},
+			],
+			order: [
+				[{model: solveHistoryModel}, "solved_status", "asc"],
+				[{model: solveHistoryModel}, "attempted", "desc"],
+				["id", "asc"],
+			],
+		})
 		.then(async (val) => {
 			let ret = await TaskFactory(val);
 			res.status(status.SUCCESS).json(ret);
