@@ -1,8 +1,8 @@
-const mcqModel = require("../../../models/mcq");
+const WordToPictureModel = require("../../../models/word_picture");
 const {Op} = require("sequelize");
 
-const FetchMCQ = async (subTaskId) => {
-	const questions = await mcqModel.findAll({
+const FetchWordToPicture = async (subTaskId) => {
+	let questions = await WordToPictureModel.findAll({
 		where: {
 			subTask_id: {
 				[Op.in]: subTaskId,
@@ -17,8 +17,8 @@ const FetchMCQ = async (subTaskId) => {
 		let exercise = {
 			subTaskId: question.dataValues.subTask_id,
 			question: question.dataValues.question,
+			images: question.dataValues.images,
 			answer: question.dataValues.answer,
-			options: question.dataValues.options,
 			explanation: question.dataValues.explanation,
 		};
 
@@ -28,4 +28,4 @@ const FetchMCQ = async (subTaskId) => {
 	return {error: false, question: returnableQuestion};
 };
 
-module.exports = FetchMCQ;
+module.exports = FetchWordToPicture;
