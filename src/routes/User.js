@@ -18,7 +18,7 @@ const findPictureWord = require("../functions/tasks/picture_to_word/picture_word
 const findMatchingCaption = require("../functions/tasks/caption_matching/caption_matching");
 const user_middleware = require("../middlewares/user_auth");
 const verify_jwt = require("../functions/Authentication/User/jwtVerifier");
-const GetTasks = require("../functions/tasks/GetTasks");
+const GetTasks = require("../functions/tasks/Get_Tasks");
 
 //Authentication
 router.post("/user/register", registration);

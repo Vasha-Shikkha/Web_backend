@@ -1,7 +1,7 @@
 const status = require("../../utils/status_code/status_codes");
 const {QueryTypes} = require("sequelize");
 const sequelize = require("../../utils/database/database");
-const TaskFactory = require("./TaskFactory");
+const TaskFactory = require("./Task_Factory");
 
 const GetTasks = async (req, res) => {
 	let offset = parseInt(req.query.offset);
