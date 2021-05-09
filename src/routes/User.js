@@ -18,7 +18,7 @@ const findPictureWord = require("../functions/tasks/picture_to_word/picture_word
 const findMatchingCaption = require("../functions/tasks/caption_matching/caption_matching");
 const user_middleware = require("../middlewares/user_auth");
 const verify_jwt = require("../functions/Authentication/User/jwtVerifier");
-const taskList = require("../functions/tasks/getTasks");
+const GetTasks = require("../functions/tasks/GetTasks");
 
 //Authentication
 router.post("/user/register", registration);
@@ -33,7 +33,7 @@ router.get("/user/topics", user_middleware.user_auth, getTopics);
 router.get("/user/exercises", user_middleware.user_auth, getAvailableExercises);
 
 //Tasks
-router.get("/user/task/all", user_middleware.user_auth, taskList);
+router.get("/user/task/all", user_middleware.user_auth, GetTasks);
 
 router.get("/user/task/mcq", user_middleware.user_auth, findMcq);
 router.get("/user/task/fix_jumbled_word", user_middleware.user_auth, findJumbledWord);

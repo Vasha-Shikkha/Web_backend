@@ -1,9 +1,9 @@
 const status = require("../../utils/status_code/status_codes");
 const {QueryTypes} = require("sequelize");
 const sequelize = require("../../utils/database/database");
-const TaskFactory = require("./taskFactory");
+const TaskFactory = require("./TaskFactory");
 
-const getTasks = async (req, res) => {
+const GetTasks = async (req, res) => {
 	let offset = parseInt(req.query.offset);
 	let limit = parseInt(req.query.limit);
 	let level = parseInt(req.query.level);
@@ -41,4 +41,4 @@ const getTasks = async (req, res) => {
 		});
 };
 
-module.exports = getTasks;
+module.exports = GetTasks;
