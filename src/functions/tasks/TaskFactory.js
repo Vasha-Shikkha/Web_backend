@@ -16,7 +16,7 @@ const TaskFactory = async (tasks) => {
 			{attributes: ["id"]},
 			{
 				where: {
-					task_id: task.dataValues.id,
+					task_id: task.task_id,
 				},
 			}
 		);

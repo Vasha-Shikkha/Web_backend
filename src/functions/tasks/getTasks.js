@@ -1,6 +1,6 @@
-const taskModel = require("../../models/task");
-const solveHistoryModel = require("../../models/solve_history");
 const status = require("../../utils/status_code/status_codes");
+const {QueryTypes} = require("sequelize");
+const sequelize = require("../../utils/database/database");
 const TaskFactory = require("./taskFactory");
 
 const getTasks = async (req, res) => {
@@ -9,31 +9,30 @@ const getTasks = async (req, res) => {
 	let level = parseInt(req.query.level);
 	let topic_id = parseInt(req.query.topic_id);
 
-	await taskModel
-		.findAll({
-			offset,
-			limit,
-			where: {
-				topic_id,
-				level,
-			},
-			include: [
-				{
-					model: solveHistoryModel,
-					required: false,
-					where: {
-						user_id: req.user.id,
-					},
-				},
-			],
-			order: [
-				[{model: solveHistoryModel}, "solved_status", "asc"],
-				[{model: solveHistoryModel}, "attempted", "desc"],
-				["id", "asc"],
-			],
+	const sql =
+		'select * from (select id as task_id, topic_id, level, name, instruction, "instructionImage" from "Task") T\n' +
+		'left join (select id as SH_ID, task_id as sh_task_id, user_id, solved_status, attempted, deleted from "Solve_History") SH on task_id = SH_task_id\n' +
+		"where (user_id is null) or (topic_id = " +
+		topic_id +
+		" and level = " +
+		level +
+		" and user_id = " +
+		req.user.id +
+		")\n" +
+		"order by coalesce(solved_status, 1) asc, coalesce(attempted, 0) desc\n" +
+		"limit " +
+		limit +
+		"\n" +
+		"offset " +
+		offset +
+		";";
+
+	await sequelize
+		.query(sql, {
+			type: QueryTypes.UPDATE,
 		})
 		.then(async (val) => {
-			let ret = await TaskFactory(val);
+			let ret = await TaskFactory(val[0]);
 			res.status(status.SUCCESS).json(ret);
 		})
 		.catch((err) => {
