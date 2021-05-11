@@ -54,7 +54,7 @@ const TaskFactory = async (tasks) => {
 		}
 
 		if (data && !data.error && data.question) {
-			questions.push({taskDetail: task.dataValues, question: data.question});
+			questions.push({taskDetail: task, question: data.question});
 		}
 	}
 
