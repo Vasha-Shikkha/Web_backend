@@ -17,7 +17,7 @@ const FetchFillInTheBlanks = async (subTaskId) => {
 	for (let question of questions) {
 		let exercise = {
 			subTaskId: question.dataValues.subTask_id,
-			question: question.dataValues.question,
+			paragraph: question.dataValues.paragraph,
 			options: question.dataValues.options,
 			answers: question.dataValues.answers,
 			explanation: question.dataValues.explanation,
