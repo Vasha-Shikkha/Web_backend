@@ -7,19 +7,16 @@ const FetchJumbledWord = require("./fix_jumbled_word/jumbledWord");
 const FetchJumbledSentence = require("./fix_jumbled_sentence/jumbledSentence");
 const FetchFillInTheBlanks = require("./fill_in_the_blanks/fillInTheBlanks");
 const FetchCaptionMatching = require("./caption_matching/captionMatching");
-
+const {Op} = require("sequelize");
 const TaskFactory = async (tasks) => {
 	let questions = [];
 	for (let task of tasks) {
 		let data = {};
-		let subTasks = await subTaskModel.findAll(
-			{attributes: ["id"]},
-			{
-				where: {
-					task_id: task.task_id,
-				},
-			}
-		);
+		let subTasks = await subTaskModel.findAll({
+			where: {
+				task_id: task.task_id,
+			},
+		});
 
 		let subTaskId = [];
 		for (let subTask of subTasks) subTaskId.push(subTask.dataValues.id);
@@ -53,6 +50,7 @@ const TaskFactory = async (tasks) => {
 				break;
 		}
 
+		//console.log(data.question);
 		if (data && !data.error && data.question) {
 			questions.push({taskDetail: task, question: data.question});
 		}
