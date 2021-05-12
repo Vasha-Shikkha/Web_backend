@@ -20,6 +20,7 @@ const FetchPictureToWord = async (subTaskId) => {
 		let exercise = {
 			subTaskId: question.dataValues.subTask_id,
 			question: question.dataValues.question,
+			image: question.dataValues.image,
 			options: question.dataValues.options,
 			answer: question.dataValues.answer,
 			explanation: question.dataValues.explanation,
