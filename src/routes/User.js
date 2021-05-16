@@ -16,6 +16,8 @@ const getAvailableExercises = require("../functions/topic/User/getAvailableExerc
 const findJumbledSentence = require("../functions/tasks/fix_jumbled_sentence/fix_jumbled_sentence");
 const findPictureWord = require("../functions/tasks/picture_to_word/picture_word");
 const findMatchingCaption = require("../functions/tasks/caption_matching/caption_matching");
+const findErrorInSentence = require("../functions/tasks/error_in_sentence/error_in_sentence");
+const findTrueFalse = require("../functions/tasks/true_false/true_false");
 const user_middleware = require("../middlewares/user_auth");
 const verify_jwt = require("../functions/Authentication/User/jwtVerifier");
 const GetTasks = require("../functions/tasks/Get_Tasks");
@@ -43,6 +45,8 @@ router.get("/user/task/word_to_picture", user_middleware.user_auth, findWordPict
 router.get("/user/task/picture_to_word", user_middleware.user_auth, findPictureWord);
 router.get("/user/task/caption_matching", user_middleware.user_auth, findMatchingCaption);
 router.get("/user/task/fix_jumbled_sentence", user_middleware.user_auth, findJumbledSentence);
+router.get("/user/task/error_in_sentence", user_middleware.user_auth, findErrorInSentence);
+router.get("/user/task/true_false", user_middleware.user_auth, findTrueFalse);
 
 //dictionary
 router.get("/dictionary", lookUpWord);

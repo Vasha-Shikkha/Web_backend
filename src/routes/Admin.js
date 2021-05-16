@@ -22,6 +22,14 @@ const JSinsert = require("../functions/content/fix_jumbled_sentence/insert");
 const JSupdate = require("../functions/content/fix_jumbled_sentence/edit");
 const JSdelete = require("../functions/content/fix_jumbled_sentence/delete");
 
+const TFinsert = require("../functions/content/true_false/insert");
+//const TFupdate = require("../functions/content/true_false/edit");
+//const TFdelete = require("../functions/content/true_false/delete");
+
+const ErrorInsert = require("../functions/content/error_in_sentence/insert");
+const ErrorUpdate = require("../functions/content/error_in_sentence/edit");
+const ErrorDelete = require("../functions/content/error_in_sentence/delete");
+
 const SMinsert = require("../functions/content/sentence_matching/insert");
 const SMupdate = require("../functions/content/sentence_matching/edit");
 const SMdelete = require("../functions/content/sentence_matching/delete");
@@ -102,5 +110,16 @@ router.post("/content/picture_to_word/insert", admin_middleware.admin_auth, PWIn
 router.post("/content/caption_matching/insert", admin_middleware.admin_auth, CMInsert);
 // router.patch("/content/caption_matching/update", admin_middleware.admin_auth, CMpdate);
 // router.delete("/content/caption_matching/delete", admin_middleware.admin_auth, CMdelete);
+
+//--True-False
+router.post("/content/true_false/insert", admin_middleware.admin_auth, TFinsert);
+// router.post("/content/true_false/edit", admin_middleware.admin_auth, TFupdate);
+// router.post("/content/true_false/delete", admin_middleware.admin_auth, TFdelete);
+
+//--Error In Sentence
+router.post("/content/error_in_sentence/insert", admin_middleware.admin_auth, ErrorInsert);
+// router.post("/content/error_in_sentence/edit", admin_middleware.admin_auth, ErrorUpdate);
+// router.post("/content/error_in_sentence/delete", admin_middleware.admin_auth, ErrorDelete);
+
 
 module.exports = router;
