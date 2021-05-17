@@ -1,10 +1,10 @@
 const taskModel = require("../../../models/task");
 const subTaskModel = require("../../../models/sub_task");
-const tfModel = require("../../../models/error_in_sentence");
+const errorInSentenceModel = require("../../../models/error_in_sentence");
 const topicLevelCreator = require("../../../utils/database/topicLevelCreator");
 const status_codes = require("../../../utils/status_code/status_codes");
 
-const insertTF = async (req, res) => {
+const insertError = async (req, res) => {
 	req.setTimeout(10 * 1000);
 	let tasks = [],
 		taskIDs = [],
@@ -98,4 +98,4 @@ const insertTF = async (req, res) => {
 		});
 };
 
-module.exports = insertTF;
+module.exports = insertError;
