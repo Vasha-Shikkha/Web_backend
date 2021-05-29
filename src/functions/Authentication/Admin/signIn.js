@@ -57,9 +57,9 @@ const signIn = async (req, res) => {
 
 	let new_token = await AdminTokenModel.create(payload);
 
-	const expires_at = moment(currentDate)
-		.add(parseInt(process.env.TOKEN_EXPIRE_TIME, process.env.TOKEN_EXPIRE_UNIT))
-		.toDate();
+	const expires_at = moment(currentDate).add(
+		parseInt(process.env.TOKEN_EXPIRE_TIME, process.env.TOKEN_EXPIRE_UNIT)
+	);
 
 	if (new_token) {
 		return res.status(status.SUCCESS).json({
