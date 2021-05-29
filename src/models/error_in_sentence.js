@@ -38,12 +38,12 @@ const error_in_sentence = database.define(
 			type: DataTypes.STRING,
 			allowNull: false,
 		},
-        
-        isMCQ: {
-            type: DataTypes.BOOLEAN,
-            allowNull: false,
-            defaultValue: true
-        },
+
+		isMCQ: {
+			type: DataTypes.BOOLEAN,
+			allowNull: false,
+			defaultValue: true,
+		},
 
 		explanation: {
 			type: DataTypes.TEXT,
@@ -53,9 +53,7 @@ const error_in_sentence = database.define(
 		deleted: {
 			type: DataTypes.BOOLEAN,
 			defaultValue: false,
-		}
-
-        
+		},
 	},
 	{
 		freezeTableName: true,
