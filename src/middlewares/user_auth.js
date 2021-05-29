@@ -10,7 +10,9 @@ exports.user_auth = async function (req, res, next) {
 					error: "Wrong format"
 				})
 		}
+
 		const token = req.header("Authorization").replace("Bearer ", "");
+
 		verifyToken(token, async (err, data) => {
 			if (err) res.status(401).json({error: "jwt expired"});
 			else {

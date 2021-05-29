@@ -49,9 +49,9 @@ router.get("/user/task/error_in_sentence", user_middleware.user_auth, findErrorI
 router.get("/user/task/true_false", user_middleware.user_auth, findTrueFalse);
 
 //dictionary
-router.get("/dictionary", lookUpWord);
+router.get("/dictionary", user_middleware.user_auth, lookUpWord);
 
 //flashCard
-router.get("/flashcard/find", recentWordSearches);
+router.post("/flashcard/find", user_middleware.user_auth, recentWordSearches);
 
 module.exports = router;
