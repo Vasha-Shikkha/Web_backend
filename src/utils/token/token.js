@@ -9,8 +9,8 @@ const generateToken = (payload) => {
 	return token;
 };
 
-const verifyToken = (token) => {
-	return jwt.verify(token, process.env.SECRET_KEY);
+const verifyToken = (token, cb) => {
+	return jwt.verify(token, process.env.SECRET_KEY, cb);
 };
 
 module.exports = {
