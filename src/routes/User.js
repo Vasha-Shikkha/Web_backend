@@ -52,6 +52,6 @@ router.get("/user/task/true_false", user_middleware.user_auth, findTrueFalse);
 router.get("/dictionary", lookUpWord);
 
 //flashCard
-router.get("/flashcard/find", recentWordSearches);
+router.post("/flashcard/find", recentWordSearches);
 
 module.exports = router;

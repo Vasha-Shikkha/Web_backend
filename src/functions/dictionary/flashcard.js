@@ -8,6 +8,7 @@ const {Op} = require("sequelize");
 const recentSearches = async (req, res) => {
 	const token = req.header("Authorization").replace("Bearer ", "");
 	const data = verifyToken(token);
+
 	let user = await userModel.findOne({
 		where: {
 			id: data.userID,
