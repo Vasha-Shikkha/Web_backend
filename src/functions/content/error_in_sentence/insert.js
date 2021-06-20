@@ -1,10 +1,10 @@
 const taskModel = require("../../../models/task");
 const subTaskModel = require("../../../models/sub_task");
-const tfModel = require("../../../models/error_in_sentence");
 const topicLevelCreator = require("../../../utils/database/topicLevelCreator");
 const status_codes = require("../../../utils/status_code/status_codes");
+const errorInSentenceModel = require("../../../models/error_in_sentence");
 
-const insertTF = async (req, res) => {
+const insertErrorInSentence = async (req, res) => {
 	req.setTimeout(10 * 1000);
 	let tasks = [],
 		taskIDs = [],
@@ -82,7 +82,7 @@ const insertTF = async (req, res) => {
 
 	await errorInSentenceModel
 		.bulkCreate(entries, {
-			fields: ["subTask_id", "sentence", "options", "answer", "explanation","isMCQ"],
+			fields: ["subTask_id", "question", "options", "answer", "explanation"],
 		})
 		.then((r) => {
 			if (r !== undefined)
@@ -98,4 +98,4 @@ const insertTF = async (req, res) => {
 		});
 };
 
-module.exports = insertTF;
+module.exports = insertErrorInSentence;

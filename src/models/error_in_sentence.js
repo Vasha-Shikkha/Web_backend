@@ -39,12 +39,6 @@ const error_in_sentence = database.define(
 			allowNull: false,
 		},
 
-		isMCQ: {
-			type: DataTypes.BOOLEAN,
-			allowNull: false,
-			defaultValue: true,
-		},
-
 		explanation: {
 			type: DataTypes.TEXT,
 			allowNull: true,
