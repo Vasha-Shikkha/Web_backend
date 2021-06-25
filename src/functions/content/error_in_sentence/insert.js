@@ -18,7 +18,7 @@ const insertErrorInSentence = async (req, res) => {
 			level: task.level_requirement,
 			instruction: task.instruction,
 			instructionImage: task.instructionImage,
-			name: "Error In Sentence",
+			name: "Error in Sentence",
 		});
 
 		// check if that topic-level-count exists

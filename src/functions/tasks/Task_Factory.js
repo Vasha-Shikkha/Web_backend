@@ -3,11 +3,12 @@ const FetchWordToPicture = require("./word_to_picture/wordToPicture");
 const FetchSentenceMatching = require("./sentence_matching/sentenceMatching");
 const FetchPictureToWord = require("./picture_to_word/pictureToWord");
 const FetchMCQ = require("./mcq/mcq");
+const FetchErrorInSentence = require("./error_in_sentence/errorInSentence");
 const FetchJumbledWord = require("./fix_jumbled_word/jumbledWord");
 const FetchJumbledSentence = require("./fix_jumbled_sentence/jumbledSentence");
 const FetchFillInTheBlanks = require("./fill_in_the_blanks/fillInTheBlanks");
 const FetchCaptionMatching = require("./caption_matching/captionMatching");
-const {Op} = require("sequelize");
+
 const TaskFactory = async (tasks) => {
 	let questions = [];
 	for (let task of tasks) {
@@ -46,6 +47,8 @@ const TaskFactory = async (tasks) => {
 			case "Drag Caption to Picture":
 				data = await FetchCaptionMatching(subTaskId);
 				break;
+			case "Error in Sentence":
+				data = await FetchErrorInSentence(subTaskId);
 			default:
 				break;
 		}
