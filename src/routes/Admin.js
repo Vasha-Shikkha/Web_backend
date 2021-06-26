@@ -60,7 +60,7 @@ router.post("/admin/initial", initialSuperAdmin); //Somehow need to make it one 
 
 //topic table
 router.get("/admin/topic/all", admin_middleware.admin_auth, getAllTopics);
-router.post("/admin/topic/insert", admin_middleware.admin_auth, [upload.single('topicImage'), singleUploadMiddleware], topicInsert);
+router.post("/admin/topic/insert", admin_middleware.admin_auth, topicInsert);
 router.patch("/admin/topic/update", admin_middleware.admin_auth, topicUpdate);
 router.delete("/admin/topic/delete", admin_middleware.admin_auth, topicDelete);
 
