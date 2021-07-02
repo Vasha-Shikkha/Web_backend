@@ -17,7 +17,7 @@ const findPictureToWord = async (req, res) => {
 		allTaskDetails = new Map(),
 		taskArray = new Map(),
 		subTaskToTaskMap = new Map();
-
+	
 	const tasks = await taskModel.findAll({
 		offset,
 		limit,
