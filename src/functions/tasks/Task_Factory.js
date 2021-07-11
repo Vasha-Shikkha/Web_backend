@@ -8,6 +8,7 @@ const FetchJumbledWord = require("./fix_jumbled_word/jumbledWord");
 const FetchJumbledSentence = require("./fix_jumbled_sentence/jumbledSentence");
 const FetchFillInTheBlanks = require("./fill_in_the_blanks/fillInTheBlanks");
 const FetchCaptionMatching = require("./caption_matching/captionMatching");
+const sequelize = require("sequelize");
 
 const TaskFactory = async (tasks) => {
 	let questions = [];
@@ -53,7 +54,8 @@ const TaskFactory = async (tasks) => {
 				break;
 		}
 
-		//console.log(data.question);
+		data.question.sort((a, b) => a.subTaskId - b.subTaskId);
+
 		if (data && !data.error && data.question) {
 			questions.push({taskDetail: task, question: data.question});
 		}
