@@ -4,7 +4,7 @@ const subTaskModel = require("../../../models/sub_task");
 const topicLevelCreator = require("../../../utils/database/topicLevelCreator");
 const status_codes = require("../../../utils/status_code/status_codes");
 
-const insertJumbledWord = async (req, res) => {
+const insertJumbledSentence = async (req, res) => {
 	req.setTimeout(10 * 1000);
 	let tasks = [],
 		taskIDs = [],
@@ -98,4 +98,4 @@ const insertJumbledWord = async (req, res) => {
 		});
 };
 
-module.exports = insertJumbledWord;
+module.exports = insertJumbledSentence;
