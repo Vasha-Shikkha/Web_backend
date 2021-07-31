@@ -54,7 +54,7 @@ const TaskFactory = async (tasks) => {
 				break;
 		}
 
-		data.question.sort((a, b) => a.subTask_id - b.subTask_id);
+		data.question.sort((a, b) => a.subTaskId - b.subTaskId);
 
 		if (data && !data.error && data.question) {
 			questions.push({taskDetail: task, question: data.question});
