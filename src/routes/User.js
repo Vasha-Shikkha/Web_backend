@@ -21,6 +21,7 @@ const findTrueFalse = require("../functions/tasks/true_false/true_false");
 const user_middleware = require("../middlewares/user_auth");
 const verify_jwt = require("../functions/Authentication/User/jwtVerifier");
 const GetTasks = require("../functions/tasks/Get_Tasks");
+const updateAttempts = require('../functions/tasks/updateAttempt')
 
 //Authentication
 router.post("/user/register", registration);
@@ -47,6 +48,9 @@ router.get("/user/task/caption_matching", user_middleware.user_auth, findMatchin
 router.get("/user/task/fix_jumbled_sentence", user_middleware.user_auth, findJumbledSentence);
 router.get("/user/task/error_in_sentence", user_middleware.user_auth, findErrorInSentence);
 router.get("/user/task/true_false", user_middleware.user_auth, findTrueFalse);
+
+//update attempt
+router.post('/user/attempt/update', user_middleware.user_auth, updateAttempts)
 
 //dictionary
 router.get("/dictionary", user_middleware.user_auth, lookUpWord);

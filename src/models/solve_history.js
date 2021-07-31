@@ -39,13 +39,13 @@ const Solve_History = database.define(
 
 		solved_status: {
 			type: DataTypes.INTEGER,
-			defaultValue: 0,
+			defaultValue: 1,
 			allowNull: false,
 		},
 
 		attempted: {
 			type: DataTypes.INTEGER,
-			defaultValue: 0,
+			defaultValue: 1,
 			allowNull: false,
 		},
 
