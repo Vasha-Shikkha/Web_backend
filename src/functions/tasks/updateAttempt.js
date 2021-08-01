@@ -1,5 +1,3 @@
-const userModel = require('../../models/User')
-const taskModel = require('../../models/task')
 const solveHistoryModel = require('../../models/solve_history')
 const status_codes = require('../../utils/status_code/status_codes')
 
