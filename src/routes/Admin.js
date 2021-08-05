@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const signIn = require("../functions/Authentication/Admin/signIn");
 const signOut = require("../functions/Authentication/Admin/signOut");
-const admin_middleware = require('../middlewares/admin_auth')
+const admin_middleware = require("../middlewares/admin_auth");
 const createAdmin = require("../functions/Authentication/Admin/createAdmin");
 const updateRole = require("../functions/Authentication/Admin/changeRole");
 const initialSuperAdmin = require("../functions/Authentication/Admin/initialCreate");
@@ -49,7 +49,9 @@ const topicInsert = require("../functions/topic/Admin/insert");
 const topicUpdate = require("../functions/topic/Admin/edit");
 const topicDelete = require("../functions/topic/Admin/delete");
 
-const {upload, singleUploadMiddleware} = require('../utils/storage/storage')
+const getTaskDetails = require("../functions/tasks/GetTaskDetails");
+
+const {upload, singleUploadMiddleware} = require("../utils/storage/storage");
 
 //Authentication
 router.post("/admin/login", signIn);
@@ -63,6 +65,9 @@ router.get("/admin/topic/all", admin_middleware.admin_auth, getAllTopics);
 router.post("/admin/topic/insert", admin_middleware.admin_auth, topicInsert);
 router.patch("/admin/topic/update", admin_middleware.admin_auth, topicUpdate);
 router.delete("/admin/topic/delete", admin_middleware.admin_auth, topicDelete);
+
+//Task
+router.get("/admin/task/all", admin_middleware.admin_auth, getTaskDetails);
 
 //Dictionary and content
 
@@ -120,6 +125,5 @@ router.post("/content/true_false/insert", admin_middleware.admin_auth, TFinsert)
 router.post("/content/error_in_sentence/insert", admin_middleware.admin_auth, ErrorInsert);
 // router.post("/content/error_in_sentence/edit", admin_middleware.admin_auth, ErrorUpdate);
 // router.post("/content/error_in_sentence/delete", admin_middleware.admin_auth, ErrorDelete);
-
 
 module.exports = router;
