@@ -1,6 +1,6 @@
 const {DataTypes} = require("sequelize");
 const database = require("../utils/database/database");
-const {hash_password, compare} = require("../utils/encryption/hash_password");
+const {hash_password} = require("../utils/encryption/hash_password");
 
 const User = database.define(
 	"User",
@@ -33,6 +33,14 @@ const User = database.define(
 			allowNull: false,
 			defaultValue: 1,
 		},
+
+		date_Of_Birth: {
+			type: DataTypes.DATE,
+		},
+
+		school: {
+			type: DataTypes.STRING,
+		}
 	},
 	{
 		freezeTableName: true,
@@ -41,8 +49,7 @@ const User = database.define(
 );
 
 User.beforeCreate(async (user, options) => {
-	const hashed_password = await hash_password(user.password);
-	user.password = hashed_password;
+	user.password = await hash_password(user.password);
 });
 
 module.exports = User;
