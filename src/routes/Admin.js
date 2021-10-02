@@ -54,7 +54,7 @@ const getTaskByID = require("../functions/tasks/getTaskByID");
 const getExerciseById = require("../functions/tasks/GetExerciseById");
 
 const editTask = require("../functions/tasks/editTask");
-
+const allTasks = require("../functions/tasks/TaskQueriesForAdmin");
 const {upload, singleUploadMiddleware} = require("../utils/storage/storage");
 
 //Authentication
@@ -75,7 +75,7 @@ router.get("/admin/task/all", admin_middleware.admin_auth, getTaskDetails);
 router.get("/admin/task/byID", admin_middleware.admin_auth, getTaskByID);
 router.post("/admin/task/update", admin_middleware.admin_auth, editTask);
 router.get("/admin/task/exercise/id", admin_middleware.admin_auth, getExerciseById);
-//Dictionary and content
+router.get("/admin/task/all/byName", admin_middleware.admin_auth, allTasks.GetAllTasksByName);
 
 //---Dictionary
 router.post("/dictionary/insert", admin_middleware.admin_auth, insertIntoDictionary);
