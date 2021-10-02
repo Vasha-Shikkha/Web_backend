@@ -50,8 +50,10 @@ const topicUpdate = require("../functions/topic/Admin/edit");
 const topicDelete = require("../functions/topic/Admin/delete");
 
 const getTaskDetails = require("../functions/tasks/GetTaskDetails");
-const getTaskByID = require('../functions/tasks/getTaskByID')
-const editTask = require('../functions/tasks/editTask')
+const getTaskByID = require("../functions/tasks/getTaskByID");
+const getExerciseById = require("../functions/tasks/GetExerciseById");
+
+const editTask = require("../functions/tasks/editTask");
 
 const {upload, singleUploadMiddleware} = require("../utils/storage/storage");
 
@@ -70,9 +72,9 @@ router.delete("/admin/topic/delete", admin_middleware.admin_auth, topicDelete);
 
 //Task
 router.get("/admin/task/all", admin_middleware.admin_auth, getTaskDetails);
-router.get('/admin/task/byID', admin_middleware.admin_auth, getTaskByID)
-router.post('/admin/task/update', admin_middleware.admin_auth, editTask)
-
+router.get("/admin/task/byID", admin_middleware.admin_auth, getTaskByID);
+router.post("/admin/task/update", admin_middleware.admin_auth, editTask);
+router.get("/admin/task/exercise/id", admin_middleware.admin_auth, getExerciseById);
 //Dictionary and content
 
 //---Dictionary
