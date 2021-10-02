@@ -15,7 +15,6 @@ const sequelize = require("sequelize");
 const getExerciseById = async (req, res) => {
 	let questions = [];
 
-	console.log("Hello World");
 	let task = await taskModel.findOne({
 		where: {
 			id: req.query.id,
@@ -65,7 +64,7 @@ const getExerciseById = async (req, res) => {
 	// console.log(data);
 
 	if (data && !data.error && data.question) {
-		questions.push({question: data.question});
+		questions.push({taskname: task.dataValues.name, question: data.question});
 	}
 
 	//console.log(questions);
