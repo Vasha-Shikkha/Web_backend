@@ -16,7 +16,7 @@ const recentSearches = async (req, res) => {
 
 		},
 		order: [
-			['last_searched', 'ASC']
+			['last_searched', 'DESC']
 		]
 	});
 
