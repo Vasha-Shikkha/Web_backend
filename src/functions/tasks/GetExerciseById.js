@@ -64,7 +64,7 @@ const getExerciseById = async (req, res) => {
 	// console.log(data);
 
 	if (data && !data.error && data.question) {
-		questions.push({taskname: task.dataValues.name, question: data.question});
+		questions = {taskname: task.dataValues.name, question: data.question};
 	}
 
 	//console.log(questions);
