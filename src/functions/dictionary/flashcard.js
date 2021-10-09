@@ -1,6 +1,7 @@
 const flashCardModel = require("../../models/flashcard");
 const dictionaryModel = require("../../models/dictionary");
 const status = require("../../utils/status_code/status_codes");
+const sequelize = require("sequelize")
 const {Op} = require("sequelize");
 
 const recentSearches = async (req, res) => {
@@ -9,10 +10,14 @@ const recentSearches = async (req, res) => {
 	const flashCards = await flashCardModel.findAll({
 		where: {
 			user_id: req.user.dataValues.id,
-			last_searched: {
-				[Op.gte]: dateToTime,
-			},
+			[Op.and]: [
+				sequelize.where(sequelize.fn('date', sequelize.col('last_searched')), '>=', dateToTime)
+			]
+
 		},
+		order: [
+			['last_searched', 'ASC']
+		]
 	});
 
 	let recentWords = [];
