@@ -44,6 +44,11 @@ const task = database.define(
 			type: DataTypes.STRING,
 			allowNull: true,
 		},
+
+		tutorial: {
+			type: DataTypes.STRING,
+			allowNull: true
+		}
 	},
 	{
 		freezeTableName: true,
