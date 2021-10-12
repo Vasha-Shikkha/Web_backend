@@ -83,7 +83,7 @@ router.delete("/dictionary/deleteAll", admin_middleware.admin_auth, dumpDictiona
 
 //---Fill in the blanks
 router.post("/content/fill_in_the_blanks/insert", admin_middleware.admin_auth, FBinsert);
-router.patch("/content/fill_in_the_blanks/update", admin_middleware.admin_auth, FBupdate);
+router.post("/content/fill_in_the_blanks/update", admin_middleware.admin_auth, FBupdate);
 router.delete("/content/fill_in_the_blanks/delete", admin_middleware.admin_auth, FBdelete);
 
 //---Sentence matching
