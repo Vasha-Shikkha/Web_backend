@@ -1,31 +1,28 @@
-const wordToPictureModel = require("../../../models/word_picture");
+const wordPictureModel = require("../../../models/word_picture");
 const status_codes = require("../../../utils/status_code/status_codes");
 
-const updateFB = async (req, res) => {
-	wordToPictureModel
-		.bulkCreate(req.body, {
-			fields: [
-				"id",
-				"topic_id",
-				"question",
-				"images",
-				"answer",
-				"level_requirement",
-				"explanation",
-			],
-			updateOnDuplicate: ["question", "images", "answer", "level_requirement", "explanation"],
+const updateWordToPicture = async (req, res) => {
+	const toUpdate = req.body.question
+	toUpdate.forEach((question) => {
+		wordPictureModel.update({
+			question: question.question,
+			images: question.images,
+			answer: question.answer,
+			explanation: question.explanation,
+		}, {
+			where: {
+				subTask_id: question.subTaskId
+			}
+		}).then(() => {
+			return res.status(status_codes.SUCCESS).json({
+				message: "Content updated successfully"
+			})
+		}).catch(() => {
+			return res.status(status_codes.INTERNAL_SERVER_ERROR).json({
+				error: "Something went wrong"
+			})
 		})
-		.then((r) => {
-			if (r !== undefined)
-				return res.status(status_codes.SUCCESS).send({
-					message: "Content update successful",
-				});
-		})
-		.catch((err) => {
-			return res.status(status_codes.INTERNAL_SERVER_ERROR).send({
-				error: "Something went wrong",
-			});
-		});
+	})
 };
 
-module.exports = updateFB;
+module.exports = updateWordToPicture;

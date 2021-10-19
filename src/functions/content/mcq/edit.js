@@ -1,38 +1,28 @@
 const mcqModel = require("../../../models/mcq");
 const status_codes = require("../../../utils/status_code/status_codes");
 
-const updateFB = async (req, res) => {
-	mcqModel
-		.bulkCreate(req.body, {
-			fields: [
-				"id",
-				"topic_id",
-				"question",
-				"options",
-				"answer",
-				"level_requirement",
-				"explanation",
-			],
-			updateOnDuplicate: [
-				"topic_id",
-				"question",
-				"options",
-				"answer",
-				"level_requirement",
-				"explanation",
-			],
+const updateMCQ = async (req, res) => {
+	const toUpdate = req.body.question
+	toUpdate.forEach((question) => {
+		mcqModel.update({
+			question: question.question,
+			options: question.options,
+			answer: question.answer,
+			explanation: question.explanation
+		}, {
+			where: {
+				subTask_id: question.subTask_id
+			}
+		}).then(() => {
+			return res.status(status_codes.SUCCESS).json({
+				message: "Content updated successfully"
+			})
+		}).catch(() => {
+			return res.status(status_codes.INTERNAL_SERVER_ERROR).json({
+				error: "Something went wrong"
+			})
 		})
-		.then((r) => {
-			if (r !== undefined)
-				return res.status(status_codes.SUCCESS).send({
-					message: "Content update successful",
-				});
-		})
-		.catch((err) => {
-			return res.status(status_codes.INTERNAL_SERVER_ERROR).send({
-				error: "Something went wrong",
-			});
-		});
+	})
 };
 
-module.exports = updateFB;
+module.exports = updateMCQ;

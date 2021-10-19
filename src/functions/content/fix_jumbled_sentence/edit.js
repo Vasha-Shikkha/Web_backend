@@ -1,36 +1,28 @@
-const fixJumbledWordModel = require("../../../models/jumbled_word");
+const fixJumbledSentenceModel = require("../../../models/jumbled_sentence");
 const status_codes = require("../../../utils/status_code/status_codes");
 
-const updateFB = async (req, res) => {
-	// fixJumbledWordModel
-	// 	.bulkCreate(req.body, {
-	// 		fields: [
-	// 			"id",
-	// 			"topic_id",
-	// 			"original_word",
-	// 			"level_requirement",
-	// 			"explanation",
-	// 			"context",
-	// 		],
-	// 		updateOnDuplicate: [
-	// 			"topic_id",
-	// 			"original_word",
-	// 			"level_requirement",
-	// 			"explanation",
-	// 			"context",
-	// 		],
-	// 	})
-	// 	.then((r) => {
-	// 		if (r !== undefined)
-	// 			return res.status(status_codes.SUCCESS).send({
-	// 				message: "Content update successful",
-	// 			});
-	// 	})
-	// 	.catch((err) => {
-	// 		return res.status(status_codes.INTERNAL_SERVER_ERROR).send({
-	// 			error: "Something went wrong",
-	// 		});
-	// 	});
+const updateJumbledSentence = async (req, res) => {
+    const toUpdate = req.body.question
+    toUpdate.forEach((question) => {
+        fixJumbledSentenceModel.update({
+            original_sentence: question.chunks,
+            paragraph: question.paragraph,
+            explanation: question.explanation
+        }, {
+            where: {
+                subTask_id: question.subTaskId
+            }
+        }).then(() => {
+            return res.status(status_codes.SUCCESS).json({
+                message: "Content updated successfully"
+            })
+        }).catch(() => {
+            return res.status(status_codes.INTERNAL_SERVER_ERROR).json({
+                error: "Something went wrong"
+            })
+        })
+    })
+
 };
 
-module.exports = updateFB;
+module.exports = updateJumbledSentence;

@@ -37,11 +37,11 @@ const WPinsert = require("../functions/content/word_to_picture/insert");
 const WPupdate = require("../functions/content/word_to_picture/edit");
 const WPdelete = require("../functions/content/word_to_picture/delete");
 const PWInsert = require("../functions/content/picture_to_word/insert");
-// const PWupdate = require("../functions/content/picture_to_word/edit");
+const PWupdate = require("../functions/content/picture_to_word/edit");
 // const PWdelete = require("../functions/content/picture_to_word/delete");
 
 const CMInsert = require("../functions/content/caption_matching/insert");
-// const CMupdate = require("../functions/content/caption_matching/edit");
+const CMupdate = require("../functions/content/caption_matching/edit");
 // const CMdelete = require("../functions/content/caption_matching/delete");
 
 const getAllTopics = require("../functions/topic/Admin/allTopics");
@@ -88,7 +88,7 @@ router.delete("/content/fill_in_the_blanks/delete", admin_middleware.admin_auth,
 
 //---Sentence matching
 router.post("/content/sentence_matching/insert", admin_middleware.admin_auth, SMinsert);
-router.patch("/content/sentence_matching/update", admin_middleware.admin_auth, SMupdate);
+router.post("/content/sentence_matching/update", admin_middleware.admin_auth, SMupdate);
 router.delete("/content/sentence_matching/delete", admin_middleware.admin_auth, SMdelete);
 
 //---Jumbled word
@@ -99,27 +99,27 @@ router.delete("/content/jumbled_word/delete", admin_middleware.admin_auth, JWdel
 //---Jumbled sentence
 
 router.post("/content/jumbled_sentence/insert", admin_middleware.admin_auth, JSinsert);
-router.patch("/content/jumbled_sentence/update", admin_middleware.admin_auth, JSupdate);
+router.post("/content/jumbled_sentence/update", admin_middleware.admin_auth, JSupdate);
 router.delete("/content/jumbled_sentence/delete", admin_middleware.admin_auth, JSdelete);
 
 //---mcq
 router.post("/content/mcq/insert", admin_middleware.admin_auth, mcqInsert);
-router.patch("/content/mcq/update", admin_middleware.admin_auth, mcqUpdate);
+router.post("/content/mcq/update", admin_middleware.admin_auth, mcqUpdate);
 router.delete("/content/mcq/delete", admin_middleware.admin_auth, mcqDelete);
 
 //---Word to picture
 router.post("/content/word_to_picture/insert", admin_middleware.admin_auth, WPinsert);
-router.patch("/content/word_to_picture/update", admin_middleware.admin_auth, WPupdate);
+router.post("/content/word_to_picture/update", admin_middleware.admin_auth, WPupdate);
 router.delete("/content/word_to_picture/delete", admin_middleware.admin_auth, WPdelete);
 
 //---Picture to word
 router.post("/content/picture_to_word/insert", admin_middleware.admin_auth, PWInsert);
-// router.patch("/content/picture_to_word/update", admin_middleware.admin_auth, PWupdate);
+router.post("/content/picture_to_word/update", admin_middleware.admin_auth, PWupdate);
 // router.delete("/content/picture_to_word/delete", admin_middleware.admin_auth, PWdelete);
 
 //---Caption to Picture
 router.post("/content/caption_matching/insert", admin_middleware.admin_auth, CMInsert);
-// router.patch("/content/caption_matching/update", admin_middleware.admin_auth, CMpdate);
+router.post("/content/caption_matching/update", admin_middleware.admin_auth, CMupdate);
 // router.delete("/content/caption_matching/delete", admin_middleware.admin_auth, CMdelete);
 
 //--True-False
