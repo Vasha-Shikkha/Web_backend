@@ -5,7 +5,7 @@ const updateErrorInASentence = async (req, res) => {
     const toUpdate = req.body.question
     toUpdate.forEach((question) => {
         errorSentenceModel.update({
-            question: question.question,
+            sentence: question.sentence,
             options: question.options,
             answer: question.answer,
             explanation: question.explanation
