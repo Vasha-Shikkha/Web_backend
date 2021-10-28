@@ -8,12 +8,15 @@ const updateRole = require("../functions/Authentication/Admin/changeRole");
 const initialSuperAdmin = require("../functions/Authentication/Admin/initialCreate");
 const insertIntoDictionary = require("../functions/content/dictionary/insert");
 const dumpDictionary = require("../functions/content/dictionary/deleteAll");
+
 const FBinsert = require("../functions/content/fill_in_the_blanks/insert");
 const FBupdate = require("../functions/content/fill_in_the_blanks/edit");
 const FBdelete = require("../functions/content/fill_in_the_blanks/delete");
+
 const mcqInsert = require("../functions/content/mcq/insert");
 const mcqUpdate = require("../functions/content/mcq/edit");
 const mcqDelete = require("../functions/content/mcq/delete");
+
 const JWinsert = require("../functions/content/fix_jumbled_word/insert");
 const JWupdate = require("../functions/content/fix_jumbled_word/edit");
 const JWdelete = require("../functions/content/fix_jumbled_word/delete");
@@ -33,9 +36,11 @@ const ErrorDelete = require("../functions/content/error_in_sentence/delete");
 const SMinsert = require("../functions/content/sentence_matching/insert");
 const SMupdate = require("../functions/content/sentence_matching/edit");
 const SMdelete = require("../functions/content/sentence_matching/delete");
+
 const WPinsert = require("../functions/content/word_to_picture/insert");
 const WPupdate = require("../functions/content/word_to_picture/edit");
 const WPdelete = require("../functions/content/word_to_picture/delete");
+
 const PWInsert = require("../functions/content/picture_to_word/insert");
 const PWupdate = require("../functions/content/picture_to_word/edit");
 // const PWdelete = require("../functions/content/picture_to_word/delete");
@@ -93,11 +98,10 @@ router.delete("/content/sentence_matching/delete", admin_middleware.admin_auth, 
 
 //---Jumbled word
 router.post("/content/jumbled_word/insert", admin_middleware.admin_auth, JWinsert);
-router.patch("/content/jumbled_word/update", admin_middleware.admin_auth, JWupdate);
+router.post("/content/jumbled_word/update", admin_middleware.admin_auth, JWupdate);
 router.delete("/content/jumbled_word/delete", admin_middleware.admin_auth, JWdelete);
 
 //---Jumbled sentence
-
 router.post("/content/jumbled_sentence/insert", admin_middleware.admin_auth, JSinsert);
 router.post("/content/jumbled_sentence/update", admin_middleware.admin_auth, JSupdate);
 router.delete("/content/jumbled_sentence/delete", admin_middleware.admin_auth, JSdelete);
