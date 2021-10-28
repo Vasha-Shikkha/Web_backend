@@ -5,12 +5,12 @@ const updateJumbledSentence = async (req, res) => {
     const toUpdate = req.body.question
     toUpdate.forEach((question) => {
         fixJumbledSentenceModel.update({
-            original_sentence: question.chunks,
+            original_sentence: question.answer,
             paragraph: question.paragraph,
             explanation: question.explanation
         }, {
             where: {
-                subTask_id: question.subTaskId
+                subTask_id: question.subTask_id
             }
         }).then(() => {
             return res.status(status_codes.SUCCESS).json({

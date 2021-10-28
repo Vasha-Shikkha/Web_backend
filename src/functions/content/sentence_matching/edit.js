@@ -10,7 +10,7 @@ const updateSM = async (req, res) => {
 			explanation: question.explanation
 		}, {
 			where: {
-				subTask_id: question.subTask_id
+				subTask_id: question.subTaskId
 			}
 		}).then(() => {
 			return res.status(status_codes.SUCCESS).json({

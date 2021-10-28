@@ -6,11 +6,11 @@ const updateJumbledWord = async (req, res) => {
     toUpdate.forEach((question) => {
         fixJumbledWordModel.update({
             original_word: question.word,
-            paragraph: question.paragraph,
+            paragraph: question.answer,
             explanation: question.explanation
         }, {
             where: {
-                subTask_id: question.subTaskId
+                subTask_id: question.subTask_id
             }
         }).then(() => {
             return res.status(status_codes.SUCCESS).json({
