@@ -45,7 +45,7 @@ const task = database.define(
 			allowNull: true,
 		},
 
-		tutorial: {
+		exerciseInstructions: {
 			type: DataTypes.STRING,
 			allowNull: true
 		}

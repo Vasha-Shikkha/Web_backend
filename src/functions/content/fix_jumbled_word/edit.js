@@ -3,6 +3,7 @@ const status_codes = require("../../../utils/status_code/status_codes");
 
 const updateJumbledWord = async (req, res) => {
     const toUpdate = req.body.question
+    // console.log(toUpdate);
     toUpdate.forEach((question) => {
         fixJumbledWordModel.update({
             original_word: question.word,
