@@ -12,7 +12,7 @@ const GetTasks = async (req, res) => {
 
 	const total = await taskModel.count({where: {topic_id, level}});
 	const sql =
-		'select * from (select id as task_id, topic_id, level, name, instruction, "instructionImage" from "Task") T\n' +
+		'select * from (select id as task_id, topic_id, level, name, instruction, "instructionImage","exerciseInstructions" from "Task") T\n' +
 		'left join (select id as SH_ID, task_id as sh_task_id, user_id, solved_status, attempted, deleted from "Solve_History" where user_id = ' +
 		req.user.id +
 		") SH on task_id = SH_task_id\n" +

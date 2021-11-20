@@ -46,7 +46,7 @@ const task = database.define(
 		},
 
 		exerciseInstructions: {
-			type: DataTypes.STRING,
+			type: DataTypes.TEXT,
 			allowNull: true
 		}
 	},
